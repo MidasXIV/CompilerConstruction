@@ -1,0 +1,959 @@
+<!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">/************************************************/</span>
+Identifier<span style="color: #333333">.</span><span style="color: #0000CC">l</span>
+<span style="color: #333333">*************************************************/</span>
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include<span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #333399; font-weight: bold">int</span> lineno <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+<span style="color: #333333">%}</span>
+constant <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span><span style="color: #333333">|</span><span style="color: #333399; font-weight: bold">char</span><span style="color: #333333">|</span><span style="color: #333399; font-weight: bold">float</span><span style="color: #333333">)</span>
+operator <span style="color: #333333">(&lt;|&gt;|</span><span style="background-color: #fff0f0">&quot;++&quot;</span><span style="color: #333333">|</span><span style="background-color: #fff0f0">&quot;--&quot;</span><span style="color: #333333">|</span><span style="background-color: #fff0f0">&quot;+&quot;</span><span style="color: #333333">|</span><span style="background-color: #fff0f0">&quot;-&quot;</span><span style="color: #333333">|</span><span style="background-color: #fff0f0">&quot;*&quot;</span><span style="color: #333333">)</span>
+keywords <span style="color: #333333">(</span><span style="color: #008800; font-weight: bold">if</span><span style="color: #333333">|</span><span style="color: #008800; font-weight: bold">while</span><span style="color: #333333">|</span><span style="color: #008800; font-weight: bold">do</span><span style="color: #333333">|</span><span style="color: #008800; font-weight: bold">for</span><span style="color: #333333">|</span><span style="color: #008800; font-weight: bold">switch</span><span style="color: #333333">)</span>
+digit <span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]</span>
+letter <span style="color: #333333">[</span>a<span style="color: #333333">-</span>zA<span style="color: #333333">-</span>Z<span style="color: #333333">]</span>
+identi <span style="color: #333333">{</span>letter<span style="color: #333333">}({</span>letter<span style="color: #333333">}|{</span>digit<span style="color: #333333">})*</span>
+integer <span style="color: #333333">{</span>digit<span style="color: #333333">}*</span>
+<span style="color: #333333">%%</span>
+<span style="color: #333333">{</span>constant<span style="color: #333333">}</span> <span style="color: #333333">{</span>printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;\n&quot;</span><span style="color: #333333">);</span>ECHO<span style="color: #333333">;</span>printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot; constant %d&quot;</span><span style="color: #333333">,</span>lineno<span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+<span style="color: #333333">{</span>operator<span style="color: #333333">}</span> <span style="color: #333333">{</span>printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;\n&quot;</span><span style="color: #333333">);</span>ECHO<span style="color: #333333">;</span>printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot; operator %d&quot;</span><span style="color: #333333">,</span>lineno<span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+<span style="color: #333333">{</span>keywords<span style="color: #333333">}</span> <span style="color: #333333">{</span>printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;\n&quot;</span><span style="color: #333333">);</span>ECHO<span style="color: #333333">;</span>printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot; keyword %d&quot;</span><span style="color: #333333">,</span>lineno<span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+<span style="color: #333333">{</span>digit<span style="color: #333333">}*</span> <span style="color: #333333">{</span>printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;\n&quot;</span><span style="color: #333333">);</span>ECHO<span style="color: #333333">;</span>printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot; Integer %d&quot;</span><span style="color: #333333">,</span>lineno<span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+<span style="color: #333333">{</span>identi<span style="color: #333333">}</span> <span style="color: #333333">{</span>printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;\n&quot;</span><span style="color: #333333">);</span>ECHO<span style="color: #333333">;</span>printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot; identifier %d&quot;</span><span style="color: #333333">,</span>lineno<span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+<span style="background-color: #fff0f0">&quot; &quot;</span> <span style="color: #333333">;</span>
+<span style="background-color: #fff0f0">&quot;\t&quot;</span> <span style="color: #333333">;</span>
+<span style="color: #333333">.</span> <span style="background-color: #fff0f0">&quot;&quot;</span><span style="color: #333333">;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">\</span>n <span style="color: #333333">{</span>lineno<span style="color: #333333">++;</span>	<span style="color: #333333">}</span>
+<span style="color: #333333">%%</span>
+main<span style="color: #333333">()</span>
+<span style="color: #333333">{</span>
+yylex<span style="color: #333333">();</span>
+<span style="color: #333333">}</span>
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">yywrap</span><span style="color: #333333">()</span>
+<span style="color: #333333">{</span>
+<span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">;</span>
+<span style="color: #333333">}</span>
+<span style="color: #888888">/************************************************/</span>
+ Date<span style="color: #333333">.</span><span style="color: #0000CC">l</span>
+<span style="color: #333333">*************************************************/</span>
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include<span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #333333">%}</span>
+la <span style="color: #333333">([</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">2</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]|[</span><span style="color: #0000DD; font-weight: bold">3</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">])</span><span style="color: #FF0000; background-color: #FFAAAA">\</span><span style="color: #333333">/((</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">|</span><span style="color: #0000DD; font-weight: bold">3</span><span style="color: #333333">|</span><span style="color: #0000DD; font-weight: bold">5</span><span style="color: #333333">|</span><span style="color: #0000DD; font-weight: bold">7</span><span style="color: #333333">|</span><span style="color: #0000DD; font-weight: bold">8</span><span style="color: #333333">))|(</span><span style="color: #0000DD; font-weight: bold">10</span><span style="color: #333333">|</span><span style="color: #0000DD; font-weight: bold">12</span><span style="color: #333333">))</span><span style="color: #FF0000; background-color: #FFAAAA">\</span><span style="color: #333333">/([</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">2</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">])</span>
+lb <span style="color: #333333">([</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">2</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]|</span><span style="color: #0000DD; font-weight: bold">30</span><span style="color: #333333">)</span><span style="color: #FF0000; background-color: #FFAAAA">\</span><span style="color: #333333">/((</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">4</span><span style="color: #333333">|</span><span style="color: #0000DD; font-weight: bold">6</span><span style="color: #333333">|</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">))|</span><span style="color: #0000DD; font-weight: bold">11</span><span style="color: #333333">)</span><span style="color: #FF0000; background-color: #FFAAAA">\</span><span style="color: #333333">/([</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">2</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">])</span>
+lc <span style="color: #333333">([</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]|</span><span style="color: #0000DD; font-weight: bold">2</span><span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">8</span><span style="color: #333333">])</span><span style="color: #FF0000; background-color: #FFAAAA">\</span><span style="color: #333333">/</span><span style="color: #0000DD; font-weight: bold">02</span><span style="color: #FF0000; background-color: #FFAAAA">\</span><span style="color: #333333">/([</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">2</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">])</span>
+ld <span style="color: #0000DD; font-weight: bold">29</span><span style="color: #FF0000; background-color: #FFAAAA">\</span><span style="color: #333333">/</span><span style="color: #0000DD; font-weight: bold">02</span><span style="color: #FF0000; background-color: #FFAAAA">\</span><span style="color: #333333">/([</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">2</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">])</span>
+ver <span style="color: #333333">{</span>la<span style="color: #333333">}|{</span>lb<span style="color: #333333">}|{</span>lc<span style="color: #333333">}|{</span>ld<span style="color: #333333">}</span>
+<span style="color: #333333">%%</span>
+<span style="color: #333333">{</span>ver<span style="color: #333333">}</span> <span style="color: #333333">{</span> <span style="color: #888888">//printf(&quot;WORKS&quot;);</span>
+	printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;It is a valid date\n&quot;</span><span style="color: #333333">);</span>
+	printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;%c%c/&quot;</span><span style="color: #333333">,</span>yytext<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">3</span><span style="color: #333333">],</span>yytext<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">4</span><span style="color: #333333">]);</span>
+	printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;%c%c/&quot;</span><span style="color: #333333">,</span>yytext<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">],</span>yytext<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">]);</span>
+	printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;%c%c%c%c&quot;</span><span style="color: #333333">,</span>yytext<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">6</span><span style="color: #333333">],</span>yytext<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">7</span><span style="color: #333333">],</span>yytext<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">8</span><span style="color: #333333">],</span>yytext<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]);</span>
+    <span style="color: #333333">}</span>
+<span style="color: #333333">.</span><span style="color: #FF0000; background-color: #FFAAAA">\</span>n<span style="color: #333333">{</span>
+	printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;INCORRECT DATE&quot;</span><span style="color: #333333">);</span>
+<span style="color: #333333">}</span>
+<span style="color: #333333">%%</span>
+main<span style="color: #333333">()</span>
+<span style="color: #333333">{</span>
+yylex<span style="color: #333333">();</span>
+<span style="color: #333333">}</span>
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">yywrap</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">void</span><span style="color: #333333">)</span>
+<span style="color: #333333">{</span>
+<span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">;</span>
+<span style="color: #333333">}</span>
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">Count0s1s.l</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="background-color: #fff0f0">&quot;y.tab.h&quot;</span>
+<span style="color: #333333">%}</span>
+<span style="color: #333333">%%</span>
+<span style="background-color: #fff0f0">&quot;0&quot;</span>     <span style="color: #333333">{</span> <span style="color: #008800; font-weight: bold">return</span> ZERO<span style="color: #333333">;</span> <span style="color: #333333">}</span>
+<span style="background-color: #fff0f0">&quot;1&quot;</span>     <span style="color: #333333">{</span> <span style="color: #008800; font-weight: bold">return</span> ONE<span style="color: #333333">;</span> <span style="color: #333333">}</span>
+<span style="color: #333333">.</span>       <span style="color: #333333">{</span> printf <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;yylex:error:%s\n&quot;</span><span style="color: #333333">,</span> yytext<span style="color: #333333">);}</span>
+<span style="color: #333333">%%</span>
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">Count0s1s.y</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include<span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #333399; font-weight: bold">int</span> count0 <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">,</span>count1 <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+<span style="color: #333333">%}</span>
+<span style="color: #333333">%</span>token ZERO ONE
+<span style="color: #333333">%%</span>
+S   <span style="color: #333333">:</span> A
+    <span style="color: #333333">{</span>
+      printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;Count 0 = %d, Count 1 = %d\n&quot;</span><span style="color: #333333">,</span> count0<span style="color: #333333">,</span> count1<span style="color: #333333">);</span>
+    <span style="color: #333333">}</span>
+A   <span style="color: #333333">:</span> ZERO S <span style="color: #333333">{</span>count0<span style="color: #333333">++;</span> <span style="color: #333333">}</span>
+    <span style="color: #333333">|</span> ZERO <span style="color: #333333">{</span>count0<span style="color: #333333">++;</span> <span style="color: #333333">}</span>
+    <span style="color: #333333">|</span> ONE <span style="color: #333333">{</span>count1<span style="color: #333333">++;</span> <span style="color: #333333">}</span>
+    <span style="color: #333333">|</span> ONE S <span style="color: #333333">{</span>count1<span style="color: #333333">++;</span> <span style="color: #333333">}</span>
+    <span style="color: #333333">;</span>
+<span style="color: #333333">%%</span>
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">yyerror</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>msg<span style="color: #333333">)</span>
+<span style="color: #333333">{</span>
+     printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;error in input %s\n&quot;</span><span style="color: #333333">,</span> msg<span style="color: #333333">);</span>
+     exit<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">);</span>
+<span style="color: #333333">}</span>
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">()</span>
+<span style="color: #333333">{</span>
+     <span style="color: #333399; font-weight: bold">int</span> i<span style="color: #333333">;</span>
+     yyparse<span style="color: #333333">();</span>
+<span style="color: #333333">}</span>
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">Postfix.l evaluator</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #888888">/* Lex Source for Post Fix Evaluation : Example program</span>
+<span style="color: #888888">  File: a.l</span>
+<span style="color: #888888">  Desc: Lexical Analyser</span>
+<span style="color: #888888">*/</span>
+
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="background-color: #fff0f0">&quot;y.tab.h&quot;</span>
+<span style="color: #888888">/*extern int yylval; */</span>
+<span style="color: #333333">%}</span>
+
+delim           <span style="color: #333333">[</span> <span style="color: #FF0000; background-color: #FFAAAA">\</span>t<span style="color: #FF0000; background-color: #FFAAAA">\</span>n<span style="color: #333333">]</span>
+ws              <span style="color: #333333">{</span>delim<span style="color: #333333">}+</span>
+letter		<span style="color: #333333">[</span>a<span style="color: #333333">-</span>zA<span style="color: #333333">-</span>Z<span style="color: #333333">]</span>
+l_		<span style="color: #333333">[</span>letter_<span style="color: #333333">]</span>
+digit		<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]</span>
+id		<span style="color: #333333">{</span>l_<span style="color: #333333">}({</span>l_<span style="color: #333333">}|{</span>digit<span style="color: #333333">})*</span>
+int_num		<span style="color: #333333">{</span>digit<span style="color: #333333">}+</span>
+
+<span style="color: #333333">%%</span>
+<span style="color: #333333">{</span>ws<span style="color: #333333">}</span>	<span style="color: #333333">{}</span>
+<span style="background-color: #fff0f0">&quot;+&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> PLUS<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;-&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> MINUS<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;*&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> MUL<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;/&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> DIV<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;(&quot;</span> <span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> LRP<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;)&quot;</span> <span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> RRP<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;;&quot;</span> <span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> SEMICOLON<span style="color: #333333">;}</span>
+<span style="color: #333333">{</span>int_num<span style="color: #333333">}</span> <span style="color: #333333">{</span>yylval<span style="color: #333333">.</span><span style="color: #0000CC">iVal</span> <span style="color: #333333">=</span> strtol<span style="color: #333333">(</span>yytext<span style="color: #333333">,</span> NULL<span style="color: #333333">,</span> <span style="color: #0000DD; font-weight: bold">10</span><span style="color: #333333">);</span> <span style="color: #008800; font-weight: bold">return</span> NUMBER<span style="color: #333333">;}</span>
+<span style="color: #333333">{</span>id<span style="color: #333333">}</span> 	<span style="color: #333333">{</span> <span style="color: #008800; font-weight: bold">return</span> ID<span style="color: #333333">;}</span>
+<span style="color: #333333">.</span>	<span style="color: #333333">{</span> printf <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;yylex:error:%s:\n&quot;</span><span style="color: #333333">,</span> yytext<span style="color: #333333">);}</span>
+<span style="color: #333333">%%</span>
+
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">Postfix.y evaluator</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #888888">/* YACC Source for Post Fix Evaluation : Example program</span>
+<span style="color: #888888">  File: a.y</span>
+<span style="color: #888888">  Desc: Parser Generator</span>
+<span style="color: #888888">*/</span>
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdlib<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>ctype<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>define MAX_LEN  <span style="color: #0000DD; font-weight: bold">10</span>
+<span style="color: #333333">%}</span>
+<span style="color: #333333">%</span>union <span style="color: #333333">{</span>
+  <span style="color: #333399; font-weight: bold">int</span> iVal<span style="color: #333333">;</span>
+  <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>sVal<span style="color: #333333">;</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #333333">%</span>token <span style="color: #333333">&lt;</span>iVal<span style="color: #333333">&gt;</span> NUMBER
+<span style="color: #333333">%</span>token EOLN PLUS MINUS MUL DIV LRP RRP 
+<span style="color: #333333">%</span>token SEMICOLON ID
+
+<span style="color: #333333">%</span>type <span style="color: #333333">&lt;</span>iVal<span style="color: #333333">&gt;</span> expr
+<span style="color: #888888">/*</span>
+<span style="color: #888888">  E -&gt; E  E + |  E E *  | NUM | ID </span>
+<span style="color: #888888">  printf (&quot;T1:got %d * %d\n&quot;, $1, $3);</span>
+
+<span style="color: #888888">%left PLUS </span>
+<span style="color: #888888">%left MUL</span>
+<span style="color: #888888">*/</span>
+
+<span style="color: #333333">%%</span>
+
+lines  <span style="color: #333333">:</span> lines expr SEMICOLON   
+         <span style="color: #333333">{</span> 
+           printf<span style="color: #333333">(</span> <span style="background-color: #fff0f0">&quot;The postfix expr result = %d\n&quot;</span><span style="color: #333333">,</span> $2<span style="color: #333333">);</span>
+           printf<span style="color: #333333">(</span> <span style="background-color: #fff0f0">&quot;2:Pl enter yet another postfix expr ending with ; or &lt;ctrl-d&gt; to quit : &quot;</span><span style="color: #333333">);</span>
+         <span style="color: #333333">}</span>
+       <span style="color: #333333">|</span> lines SEMICOLON  
+       <span style="color: #333333">|</span>   <span style="color: #888888">/*epsilon*/</span>    <span style="color: #333333">{</span> printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;1:Pl enter an postfix expr ending with ; or &lt;ctrl-d&gt; to quit : &quot;</span><span style="color: #333333">);}</span>    
+       <span style="color: #333333">;</span>
+
+expr	 <span style="color: #333333">:</span> expr expr PLUS          <span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $1 <span style="color: #333333">+</span> $2<span style="color: #333333">;</span> <span style="color: #333333">}</span>
+       <span style="color: #333333">|</span> expr expr MUL           <span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $1 <span style="color: #333333">*</span> $2<span style="color: #333333">;</span> <span style="color: #333333">}</span> 
+       <span style="color: #333333">|</span> NUMBER                  <span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $1<span style="color: #333333">;}</span>
+	     <span style="color: #333333">;</span>
+
+<span style="color: #333333">%%</span>
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">yyerror</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>msg<span style="color: #333333">)</span>
+<span style="color: #333333">{</span>
+  printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;error in input %s\n&quot;</span><span style="color: #333333">,</span> msg<span style="color: #333333">);</span>
+  exit<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">);</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">()</span>
+<span style="color: #333333">{</span>      yyparse<span style="color: #333333">();</span>           <span style="color: #333333">}</span>
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">Prefix.l</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #888888">/* Lex Source for Post Fix Evaluation : Example program</span>
+<span style="color: #888888">  File: a.l</span>
+<span style="color: #888888">  Desc: Lexical Analyser</span>
+<span style="color: #888888">*/</span>
+
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="background-color: #fff0f0">&quot;y.tab.h&quot;</span>
+<span style="color: #888888">/*extern int yylval; */</span>
+<span style="color: #333333">%}</span>
+
+delim           <span style="color: #333333">[</span> <span style="color: #FF0000; background-color: #FFAAAA">\</span>t<span style="color: #FF0000; background-color: #FFAAAA">\</span>n<span style="color: #333333">]</span>
+ws              <span style="color: #333333">{</span>delim<span style="color: #333333">}+</span>
+letter		<span style="color: #333333">[</span>a<span style="color: #333333">-</span>zA<span style="color: #333333">-</span>Z<span style="color: #333333">]</span>
+l_		<span style="color: #333333">[</span>letter_<span style="color: #333333">]</span>
+digit		<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]</span>
+id		<span style="color: #333333">{</span>l_<span style="color: #333333">}({</span>l_<span style="color: #333333">}|{</span>digit<span style="color: #333333">})*</span>
+int_num		<span style="color: #333333">{</span>digit<span style="color: #333333">}+</span>
+
+<span style="color: #333333">%%</span>
+<span style="color: #333333">{</span>ws<span style="color: #333333">}</span>	<span style="color: #333333">{}</span>
+<span style="background-color: #fff0f0">&quot;+&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> PLUS<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;-&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> MINUS<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;*&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> MUL<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;/&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> DIV<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;(&quot;</span> <span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> LRP<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;)&quot;</span> <span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> RRP<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;;&quot;</span> <span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> SEMICOLON<span style="color: #333333">;}</span>
+<span style="color: #333333">{</span>int_num<span style="color: #333333">}</span> <span style="color: #333333">{</span>yylval<span style="color: #333333">.</span><span style="color: #0000CC">iVal</span> <span style="color: #333333">=</span> strtol<span style="color: #333333">(</span>yytext<span style="color: #333333">,</span> NULL<span style="color: #333333">,</span> <span style="color: #0000DD; font-weight: bold">10</span><span style="color: #333333">);</span> <span style="color: #008800; font-weight: bold">return</span> NUMBER<span style="color: #333333">;}</span>
+<span style="color: #333333">{</span>id<span style="color: #333333">}</span> 	<span style="color: #333333">{</span> <span style="color: #008800; font-weight: bold">return</span> ID<span style="color: #333333">;}</span>
+<span style="color: #333333">.</span>	<span style="color: #333333">{</span> printf <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;yylex:error:%s:\n&quot;</span><span style="color: #333333">,</span> yytext<span style="color: #333333">);}</span>
+<span style="color: #333333">%%</span>
+
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">Prefix.y</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdlib<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>ctype<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>define MAX_LEN  <span style="color: #0000DD; font-weight: bold">10</span>
+<span style="color: #333333">%}</span>
+<span style="color: #333333">%</span>union <span style="color: #333333">{</span>
+  <span style="color: #333399; font-weight: bold">int</span> iVal<span style="color: #333333">;</span>
+  <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>sVal<span style="color: #333333">;</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #333333">%</span>token EOLN PLUS MINUS MUL DIV LRP RRP
+<span style="color: #333333">%</span>token <span style="color: #333333">&lt;</span>iVal<span style="color: #333333">&gt;</span> NUMBER 
+<span style="color: #333333">%</span>token SEMICOLON ID
+
+<span style="color: #333333">%</span>type <span style="color: #333333">&lt;</span>iVal<span style="color: #333333">&gt;</span> expr
+<span style="color: #888888">/*</span>
+<span style="color: #888888">  E -&gt; E  E + |  E E *  | NUM | ID </span>
+<span style="color: #888888">  printf (&quot;T1:got %d * %d\n&quot;, $1, $3);</span>
+
+<span style="color: #888888">%left PLUS </span>
+<span style="color: #888888">%left MUL</span>
+<span style="color: #888888">*/</span>
+
+<span style="color: #333333">%%</span>
+
+lines  <span style="color: #333333">:</span> lines expr SEMICOLON   
+         <span style="color: #333333">{</span> 
+           printf<span style="color: #333333">(</span> <span style="background-color: #fff0f0">&quot;The prefix expr result = %d\n&quot;</span><span style="color: #333333">,</span> $2<span style="color: #333333">);</span>
+           printf<span style="color: #333333">(</span> <span style="background-color: #fff0f0">&quot;2:Pl enter yet another prefix expr ending with ; or &lt;ctrl-d&gt; to quit : &quot;</span><span style="color: #333333">);</span>
+         <span style="color: #333333">}</span>
+       <span style="color: #333333">|</span> lines SEMICOLON  
+       <span style="color: #333333">|</span>   <span style="color: #888888">/*epsilon*/</span>    <span style="color: #333333">{</span> printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;1:Pl enter an prefix expr ending with ; or &lt;ctrl-d&gt; to quit : &quot;</span><span style="color: #333333">);}</span>    
+       <span style="color: #333333">;</span>
+
+expr	 <span style="color: #333333">:</span> PLUS expr expr          <span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $2 <span style="color: #333333">+</span> $3<span style="color: #333333">;</span> <span style="color: #333333">}</span>
+	   <span style="color: #333333">|</span> MINUS expr expr          <span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $2 <span style="color: #333333">-</span> $3<span style="color: #333333">;</span> <span style="color: #333333">}</span>
+       <span style="color: #333333">|</span> MUL expr expr           <span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $2 <span style="color: #333333">*</span> $3<span style="color: #333333">;</span> <span style="color: #333333">}</span> 
+       <span style="color: #333333">|</span> DIV expr expr           <span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $2 <span style="color: #333333">/</span> $3<span style="color: #333333">;</span> <span style="color: #333333">}</span> 
+       <span style="color: #333333">|</span> NUMBER                  <span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $1<span style="color: #333333">;}</span>
+	     <span style="color: #333333">;</span>
+
+<span style="color: #333333">%%</span>
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">yyerror</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>msg<span style="color: #333333">)</span>
+<span style="color: #333333">{</span>
+  printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;error in input %s\n&quot;</span><span style="color: #333333">,</span> msg<span style="color: #333333">);</span>
+  exit<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">);</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">()</span>
+<span style="color: #333333">{</span>      yyparse<span style="color: #333333">();</span>           <span style="color: #333333">}</span>
+
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">textTOHtml.l</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="background-color: #fff0f0">&quot;y.tab.h&quot;</span>
+<span style="color: #333333">%}</span>
+id <span style="color: #0000DD; font-weight: bold">20</span><span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">|</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">)[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]</span>A<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span>A<span style="color: #333333">]((</span>P<span style="color: #333333">|</span>T<span style="color: #333333">)</span>S<span style="color: #333333">)[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]{</span><span style="color: #0000DD; font-weight: bold">3</span><span style="color: #333333">}</span>U
+name <span style="color: #333333">[</span>a<span style="color: #333333">-</span>zA<span style="color: #333333">-</span>Z<span style="color: #333333">]+</span>
+date <span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]|</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">012</span><span style="color: #333333">])</span><span style="color: #FF0000; background-color: #FFAAAA">\</span><span style="color: #333333">/(</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]|[</span><span style="color: #0000DD; font-weight: bold">12</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]|</span><span style="color: #0000DD; font-weight: bold">3</span><span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">01</span><span style="color: #333333">])</span><span style="color: #FF0000; background-color: #FFAAAA">\</span><span style="color: #333333">/(</span><span style="color: #0000DD; font-weight: bold">19</span><span style="color: #333333">|</span><span style="color: #0000DD; font-weight: bold">20</span><span style="color: #333333">)[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">][</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]</span>
+cgpa <span style="color: #333333">([</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]</span><span style="color: #FF0000; background-color: #FFAAAA">\</span><span style="color: #333333">.[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]{</span><span style="color: #0000DD; font-weight: bold">2</span><span style="color: #333333">})|(</span><span style="color: #0000DD; font-weight: bold">10</span><span style="color: #FF0000; background-color: #FFAAAA">\</span><span style="color: #333333">.</span><span style="color: #0000DD; font-weight: bold">00</span><span style="color: #333333">)</span>
+<span style="color: #333333">%%</span>
+<span style="color: #333333">{</span>id<span style="color: #333333">}</span> <span style="color: #333333">{</span> <span style="color: #008800; font-weight: bold">return</span> ID<span style="color: #333333">;</span> <span style="color: #333333">}</span>
+<span style="color: #333333">{</span>name<span style="color: #333333">}</span> <span style="color: #333333">{</span> <span style="color: #008800; font-weight: bold">return</span> NAME<span style="color: #333333">;</span> <span style="color: #333333">}</span>
+<span style="color: #333333">{</span>date<span style="color: #333333">}</span> <span style="color: #333333">{</span> <span style="color: #008800; font-weight: bold">return</span> DATE<span style="color: #333333">;</span> <span style="color: #333333">}</span>
+<span style="color: #333333">{</span>cgpa<span style="color: #333333">}</span> <span style="color: #333333">{</span> <span style="color: #008800; font-weight: bold">return</span> CGPA<span style="color: #333333">;</span> <span style="color: #333333">}</span>
+<span style="color: #FF0000; background-color: #FFAAAA">\</span>n <span style="color: #333333">{</span> <span style="color: #008800; font-weight: bold">return</span> NL<span style="color: #333333">;</span> <span style="color: #333333">}</span>
+<span style="color: #333333">%%</span>
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">textTOHtml.y</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdlib<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+extern <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>yytext<span style="color: #333333">;</span>
+<span style="color: #333333">%}</span>
+
+<span style="color: #333333">%</span>union
+<span style="color: #333333">{</span>
+  <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>sVal<span style="color: #333333">;</span>
+  <span style="color: #333399; font-weight: bold">int</span> iVal<span style="color: #333333">;</span>
+<span style="color: #333333">}</span>
+ <span style="color: #333333">%</span>token <span style="color: #333333">&lt;</span> sVal <span style="color: #333333">&gt;</span> ID NAME DATE CGPA NL <span style="color: #333333">%%</span> <span style="color: #997700; font-weight: bold">xxx:</span>data NL xxx <span style="color: #333333">|</span> data NL<span style="color: #333333">;</span>
+<span style="color: #997700; font-weight: bold">data:</span>id name date cgpa<span style="color: #333333">;</span>
+<span style="color: #997700; font-weight: bold">id:</span>ID
+<span style="color: #333333">{</span>
+  printf <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;&lt;p&gt;\n %s&quot;</span><span style="color: #333333">,</span> yytext<span style="color: #333333">);</span>
+<span style="color: #333333">};</span>
+<span style="color: #997700; font-weight: bold">name:</span>NAME
+<span style="color: #333333">{</span>
+  printf <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot; %s&quot;</span><span style="color: #333333">,</span> yytext<span style="color: #333333">);</span>
+<span style="color: #333333">};</span>
+<span style="color: #997700; font-weight: bold">date:</span>DATE
+<span style="color: #333333">{</span>
+  printf <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot; %s&quot;</span><span style="color: #333333">,</span> yytext<span style="color: #333333">);</span>
+<span style="color: #333333">};</span>
+<span style="color: #997700; font-weight: bold">cgpa:</span>CGPA
+<span style="color: #333333">{</span>
+  printf <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;%s\n  &lt;/p&gt;\n&quot;</span><span style="color: #333333">,</span> yytext<span style="color: #333333">);</span>
+<span style="color: #333333">};</span>
+<span style="color: #333333">%%</span>yyerror <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>msg<span style="color: #333333">)</span>
+<span style="color: #333333">{</span>
+  printf <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;Error: %s\n&quot;</span><span style="color: #333333">,</span> msg<span style="color: #333333">);</span>
+<span style="color: #333333">}</span>
+<span style="color: #333399; font-weight: bold">int</span>
+<span style="color: #0066BB; font-weight: bold">main</span> <span style="color: #333333">()</span>
+<span style="color: #333333">{</span>
+  printf <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;&lt;DOCTYPE html&gt;\n&quot;</span><span style="color: #333333">);</span>
+  printf <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;&lt;html&gt;\n&quot;</span><span style="color: #333333">);</span>
+  printf <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;&lt;body&gt;\n&quot;</span><span style="color: #333333">);</span>
+  yyparse <span style="color: #333333">();</span>
+  printf <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;&lt;/html&gt;\n&quot;</span><span style="color: #333333">);</span>
+  <span style="color: #008800; font-weight: bold">return</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+<span style="color: #333333">}</span>
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">HashTable.java</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.*</span><span style="color: #333333">;</span>
+<span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.io.*</span><span style="color: #333333">;</span>
+
+<span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">HashTable</span>
+<span style="color: #333333">{</span>
+	<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">(</span>String<span style="color: #333333">[]</span> args<span style="color: #333333">)</span>
+  	<span style="color: #333333">{</span>
+  		Scanner inp <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Scanner<span style="color: #333333">(</span>System<span style="color: #333333">.</span><span style="color: #0000CC">in</span><span style="color: #333333">);</span>
+  		String input <span style="color: #333333">=</span> inp<span style="color: #333333">.</span><span style="color: #0000CC">nextLine</span><span style="color: #333333">();</span>
+  		<span style="color: #333399; font-weight: bold">int</span> hashvalue <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+      		<span style="color: #333399; font-weight: bold">int</span> count <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+  		Hashtable Hashes <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Hashtable<span style="color: #333333">();</span>
+  		Enumeration s2h<span style="color: #333333">;</span>
+      
+      	<span style="color: #008800; font-weight: bold">while</span><span style="color: #333333">(!</span>input<span style="color: #333333">.</span><span style="color: #0000CC">equals</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot; &quot;</span><span style="color: #333333">))</span>
+  		<span style="color: #333333">{</span>	<span style="color: #333399; font-weight: bold">int</span> a <span style="color: #333333">=</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">,</span>b<span style="color: #333333">=</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+          	<span style="color: #008800; font-weight: bold">for</span> <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> i<span style="color: #333333">=</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span> i<span style="color: #333333">&lt;</span>input<span style="color: #333333">.</span><span style="color: #0000CC">length</span><span style="color: #333333">();</span> i<span style="color: #333333">++)</span>
+ 			<span style="color: #333333">{</span>	<span style="color: #333399; font-weight: bold">int</span> c <span style="color: #333333">=</span> <span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span><span style="color: #333333">)</span>input<span style="color: #333333">.</span><span style="color: #0000CC">charAt</span><span style="color: #333333">(</span>i<span style="color: #333333">);</span>
+				<span style="color: #008800; font-weight: bold">if</span> <span style="color: #333333">((</span>c <span style="color: #333333">&gt;=</span><span style="color: #0000DD; font-weight: bold">65</span> <span style="color: #333333">&amp;&amp;</span> c <span style="color: #333333">&lt;=</span><span style="color: #0000DD; font-weight: bold">90</span><span style="color: #333333">)</span> <span style="color: #333333">||(</span>c <span style="color: #333333">&gt;=</span><span style="color: #0000DD; font-weight: bold">97</span> <span style="color: #333333">&amp;&amp;</span> c <span style="color: #333333">&lt;=</span><span style="color: #0000DD; font-weight: bold">122</span><span style="color: #333333">))</span>
+		        	<span style="color: #333333">{</span>  a <span style="color: #333333">+=</span> c<span style="color: #333333">;</span>  <span style="color: #333333">}</span>
+     			  	<span style="color: #008800; font-weight: bold">else</span> <span style="color: #0066BB; font-weight: bold">if</span> <span style="color: #333333">(</span>c <span style="color: #333333">&gt;=</span><span style="color: #0000DD; font-weight: bold">48</span> <span style="color: #333333">&amp;&amp;</span> c <span style="color: #333333">&lt;=</span><span style="color: #0000DD; font-weight: bold">57</span><span style="color: #333333">)</span>
+       				<span style="color: #333333">{</span>  b <span style="color: #333333">+=</span> c<span style="color: #333333">;</span>  <span style="color: #333333">}</span>
+			
+				hashvalue <span style="color: #333333">=</span> <span style="color: #333333">((</span>a <span style="color: #333333">+</span> b<span style="color: #333333">*</span><span style="color: #0000DD; font-weight: bold">2</span><span style="color: #333333">)*</span><span style="color: #0000DD; font-weight: bold">17</span><span style="color: #333333">+</span><span style="color: #0000DD; font-weight: bold">5</span><span style="color: #333333">)</span> <span style="color: #333333">%</span> <span style="color: #0000DD; font-weight: bold">6</span><span style="color: #333333">;</span>
+				Hashes<span style="color: #333333">.</span><span style="color: #0000CC">put</span><span style="color: #333333">(</span>input<span style="color: #333333">,</span>hashvalue<span style="color: #333333">);</span>
+      			input <span style="color: #333333">=</span> inp<span style="color: #333333">.</span><span style="color: #0000CC">nextLine</span><span style="color: #333333">();</span>
+			<span style="color: #333333">}</span>
+		<span style="color: #333333">}</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">();</span>
+		s2h <span style="color: #333333">=</span> Hashes<span style="color: #333333">.</span><span style="color: #0000CC">keys</span><span style="color: #333333">();</span>
+		String str<span style="color: #333333">;</span>
+  		
+		<span style="color: #008800; font-weight: bold">while</span><span style="color: #333333">(</span>s2h<span style="color: #333333">.</span><span style="color: #0000CC">hasMoreElements</span><span style="color: #333333">())</span> 
+    		<span style="color: #333333">{</span>	str <span style="color: #333333">=</span> <span style="color: #333333">(</span>String<span style="color: #333333">)</span> s2h<span style="color: #333333">.</span><span style="color: #0000CC">nextElement</span><span style="color: #333333">();</span>
+       			System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span>str <span style="color: #333333">+</span> <span style="background-color: #fff0f0">&quot;: &quot;</span> <span style="color: #333333">+</span> Hashes<span style="color: #333333">.</span><span style="color: #0000CC">get</span><span style="color: #333333">(</span>str<span style="color: #333333">));</span>
+    		<span style="color: #333333">}</span> 		
+	<span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">IntermediateCode.java</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #888888">/*</span>
+<span style="color: #888888">Aman Shaikh</span>
+<span style="color: #888888">2015A7PS0039U</span>
+<span style="color: #888888">30/3/2018</span>
+<span style="color: #888888">*/</span>
+<span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.*</span><span style="color: #333333">;</span>
+
+<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">IntermediateCode</span>
+<span style="color: #333333">{</span>	
+	<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> String num_regex <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&quot;\\d+&quot;</span><span style="color: #333333">;</span>
+	<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> String id_regex  <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&quot;[a-zA-z]+[0-9]*&quot;</span><span style="color: #333333">;</span>
+	<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> String term_regex <span style="color: #333333">=</span> num_regex<span style="color: #333333">+</span><span style="background-color: #fff0f0">&quot;|&quot;</span><span style="color: #333333">+</span>id_regex<span style="color: #333333">;</span>
+	<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> String expr_regex <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&quot;(&quot;</span><span style="color: #333333">+</span>term_regex<span style="color: #333333">+</span><span style="background-color: #fff0f0">&quot;)(-(&quot;</span><span style="color: #333333">+</span>term_regex<span style="color: #333333">+</span><span style="background-color: #fff0f0">&quot;))*&quot;</span><span style="color: #333333">;</span> 
+	<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> String Stmt_regex <span style="color: #333333">=</span> id_regex<span style="color: #333333">+</span><span style="background-color: #fff0f0">&quot;=&quot;</span><span style="color: #333333">+</span>expr_regex<span style="color: #333333">;</span>
+	
+	
+	<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">boolean</span> <span style="color: #0066BB; font-weight: bold">isId</span><span style="color: #333333">(</span>String t<span style="color: #333333">)</span>
+	<span style="color: #333333">{</span>	<span style="color: #008800; font-weight: bold">return</span> t<span style="color: #333333">.</span><span style="color: #0000CC">matches</span><span style="color: #333333">(</span>id_regex<span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+	
+	<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">boolean</span> <span style="color: #0066BB; font-weight: bold">isNumber</span><span style="color: #333333">(</span>String t<span style="color: #333333">)</span>
+	<span style="color: #333333">{</span>	<span style="color: #008800; font-weight: bold">return</span> t<span style="color: #333333">.</span><span style="color: #0000CC">matches</span><span style="color: #333333">(</span>num_regex<span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+	
+	<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">boolean</span> <span style="color: #0066BB; font-weight: bold">isStmt</span><span style="color: #333333">(</span>String t<span style="color: #333333">)</span>
+	<span style="color: #333333">{</span>	<span style="color: #008800; font-weight: bold">return</span> t<span style="color: #333333">.</span><span style="color: #0000CC">matches</span><span style="color: #333333">(</span>Stmt_regex<span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+	
+	<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">boolean</span> <span style="color: #0066BB; font-weight: bold">isExpr</span><span style="color: #333333">(</span>String t<span style="color: #333333">)</span>
+	<span style="color: #333333">{</span>	<span style="color: #008800; font-weight: bold">return</span> t<span style="color: #333333">.</span><span style="color: #0000CC">matches</span><span style="color: #333333">(</span>expr_regex<span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+	
+	<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">boolean</span> <span style="color: #0066BB; font-weight: bold">isTerm</span><span style="color: #333333">(</span>String t<span style="color: #333333">)</span>
+	<span style="color: #333333">{</span>	<span style="color: #008800; font-weight: bold">return</span> t<span style="color: #333333">.</span><span style="color: #0000CC">matches</span><span style="color: #333333">(</span>term_regex<span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+	
+	<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">printRow</span><span style="color: #333333">(</span>String i<span style="color: #333333">,</span>String o<span style="color: #333333">,</span>String a1<span style="color: #333333">,</span>String a2<span style="color: #333333">,</span>String r<span style="color: #333333">)</span>
+	<span style="color: #333333">{</span>		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">();</span>
+			System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;|| &quot;</span><span style="color: #333333">+</span>i<span style="color: #333333">);</span>
+			System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;\t\t || &quot;</span><span style="color: #333333">+</span>o<span style="color: #333333">);</span>
+			System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;\t\t || &quot;</span><span style="color: #333333">+</span>a1<span style="color: #333333">);</span>
+			System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;\t\t || &quot;</span><span style="color: #333333">+</span>a2<span style="color: #333333">);</span>
+			System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;\t\t || &quot;</span><span style="color: #333333">+</span>r<span style="color: #333333">);</span>
+			<span style="color: #888888">//System.out.print(&quot;\t ||&quot;);</span>
+	<span style="color: #333333">}</span>
+	<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">(</span>String<span style="color: #333333">[]</span> args<span style="color: #333333">)</span>
+	<span style="color: #333333">{</span>		
+		Scanner in <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Scanner<span style="color: #333333">(</span>System<span style="color: #333333">.</span><span style="color: #0000CC">in</span><span style="color: #333333">);</span>
+		String input <span style="color: #333333">=</span> in<span style="color: #333333">.</span><span style="color: #0000CC">nextLine</span><span style="color: #333333">();</span>
+		<span style="color: #888888">/*</span>
+<span style="color: #888888">		System.out.println(&quot;NUMBER : &quot;+input.matches(num_regex));</span>
+<span style="color: #888888">		System.out.println(&quot;ID     : &quot;+input.matches(id_regex));</span>
+<span style="color: #888888">		System.out.println(&quot;TERM   : &quot;+input.matches(term_regex));</span>
+<span style="color: #888888">		System.out.println(&quot;EXPR   : &quot;+input.matches(expr_regex));</span>
+<span style="color: #888888">		System.out.println(&quot;STMT   : &quot;+input.matches(Stmt_regex));</span>
+<span style="color: #888888">		*/</span>
+		<span style="color: #008800; font-weight: bold">if</span><span style="color: #333333">(</span>input<span style="color: #333333">.</span><span style="color: #0000CC">matches</span><span style="color: #333333">(</span>Stmt_regex<span style="color: #333333">))</span>
+		<span style="color: #333333">{</span>	System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span>input<span style="color: #333333">+</span><span style="background-color: #fff0f0">&quot; is a valid Statement&quot;</span><span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+		<span style="color: #008800; font-weight: bold">else</span>
+		<span style="color: #333333">{</span>	System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span>input<span style="color: #333333">+</span><span style="background-color: #fff0f0">&quot; is an invalid Statement\nTry again&quot;</span><span style="color: #333333">);</span>	
+			<span style="color: #008800; font-weight: bold">return</span><span style="color: #333333">;</span>
+		<span style="color: #333333">}</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;|| INPUT\t\t || OP\t\t || ARG1\t || ARG2\t || RESULT&quot;</span><span style="color: #333333">);</span>
+		String<span style="color: #333333">[]</span> token <span style="color: #333333">=</span> input<span style="color: #333333">.</span><span style="color: #0000CC">split</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;=&quot;</span><span style="color: #333333">);</span>
+		String<span style="color: #333333">[]</span> expr_token <span style="color: #333333">=</span> token<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">].</span><span style="color: #0000CC">split</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;-&quot;</span><span style="color: #333333">);</span>
+		
+		<span style="color: #333399; font-weight: bold">int</span> count <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+		<span style="color: #888888">//System.out.println(token.length+&quot; &quot;+expr_token.length);</span>
+		<span style="color: #888888">//System.out.println(token[0]+&quot; is your ID&quot;);</span>
+		<span style="color: #888888">//System.out.println(token[1]+&quot; is your expr &quot;+isExpr(token[1]));</span>
+		<span style="color: #008800; font-weight: bold">if</span><span style="color: #333333">(</span>expr_token<span style="color: #333333">.</span><span style="color: #0000CC">length</span> <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">)</span>
+		<span style="color: #333333">{</span>	<span style="color: #888888">/*</span>
+<span style="color: #888888">			//System.out.println();</span>
+<span style="color: #888888">			System.out.print(&quot;|| &quot;+input);</span>
+<span style="color: #888888">			System.out.print(&quot;\t\t|| =&quot;);</span>
+<span style="color: #888888">			System.out.print(&quot;\t || &quot;+token[1]);</span>
+<span style="color: #888888">			System.out.print(&quot;\t\t || nill&quot;);</span>
+<span style="color: #888888">			System.out.print(&quot;\t || &quot;+token[0]);</span>
+<span style="color: #888888">			//System.out.print(&quot;\t ||&quot;);</span>
+<span style="color: #888888">			*/</span>
+			printRow<span style="color: #333333">(</span>input<span style="color: #333333">,</span><span style="background-color: #fff0f0">&quot;=&quot;</span><span style="color: #333333">,</span>token<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">],</span><span style="background-color: #fff0f0">&quot;nill&quot;</span><span style="color: #333333">,</span>token<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">]);</span>
+			<span style="color: #008800; font-weight: bold">return</span><span style="color: #333333">;</span>
+		<span style="color: #333333">}</span>
+		<span style="color: #008800; font-weight: bold">else</span>
+		<span style="color: #333333">{</span>	String pretemp<span style="color: #333333">=</span><span style="background-color: #fff0f0">&quot;&quot;</span><span style="color: #333333">;</span>
+			String temp<span style="color: #333333">=</span><span style="background-color: #fff0f0">&quot;&quot;</span><span style="color: #333333">;</span>
+			<span style="color: #008800; font-weight: bold">for</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">int</span> i <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span> i <span style="color: #333333">&lt;</span> expr_token<span style="color: #333333">.</span><span style="color: #0000CC">length</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">;</span> i<span style="color: #333333">++)</span>
+			<span style="color: #333333">{</span>	pretemp <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&quot;temp&quot;</span><span style="color: #333333">+</span>count<span style="color: #333333">++;</span>
+				temp <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&quot;temp&quot;</span><span style="color: #333333">+</span>count<span style="color: #333333">;</span>
+				<span style="color: #008800; font-weight: bold">if</span><span style="color: #333333">(</span> i<span style="color: #333333">==</span><span style="color: #0000DD; font-weight: bold">0</span> <span style="color: #333333">)</span>
+				<span style="color: #333333">{</span>	printRow<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;        &quot;</span><span style="color: #333333">,</span><span style="background-color: #fff0f0">&quot;-&quot;</span><span style="color: #333333">,</span>expr_token<span style="color: #333333">[</span>i<span style="color: #333333">],</span>expr_token<span style="color: #333333">[</span>i<span style="color: #333333">+</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">],</span>temp<span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+				<span style="color: #008800; font-weight: bold">else</span>
+				<span style="color: #333333">{</span>	printRow<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;        &quot;</span><span style="color: #333333">,</span><span style="background-color: #fff0f0">&quot;-&quot;</span><span style="color: #333333">,</span>pretemp<span style="color: #333333">,</span>expr_token<span style="color: #333333">[</span>i<span style="color: #333333">+</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">],</span>temp<span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+			<span style="color: #333333">}</span>
+			printRow<span style="color: #333333">(</span>input<span style="color: #333333">,</span><span style="background-color: #fff0f0">&quot;=&quot;</span><span style="color: #333333">,</span>temp<span style="color: #333333">,</span><span style="background-color: #fff0f0">&quot;nil&quot;</span><span style="color: #333333">,</span>token<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">]);</span>
+		<span style="color: #333333">}</span>
+		
+		
+	<span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">CodeGeneration.java</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">java.util.*</span><span style="color: #333333">;</span>
+<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">class</span> <span style="color: #BB0066; font-weight: bold">CodeGeneration</span>
+<span style="color: #333333">{</span>
+	<span style="color: #008800; font-weight: bold">public</span> <span style="color: #008800; font-weight: bold">static</span> <span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">(</span>String<span style="color: #333333">[]</span> args<span style="color: #333333">)</span>
+	<span style="color: #333333">{</span>
+		Scanner in <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Scanner<span style="color: #333333">(</span>System<span style="color: #333333">.</span><span style="color: #0000CC">in</span><span style="color: #333333">);</span>
+		String input <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&quot;&quot;</span><span style="color: #333333">;</span>
+
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;.global main&quot;</span><span style="color: #333333">);</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;msg:&quot;</span><span style="color: #333333">);</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;.string \&quot;Final result of LHS var = %d\\n\&quot;&quot;</span><span style="color: #333333">);</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;.comm   a,4&quot;</span><span style="color: #333333">);</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;.comm   b,4&quot;</span><span style="color: #333333">);</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;.comm   c,4&quot;</span><span style="color: #333333">);</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;.comm   z,4&quot;</span><span style="color: #333333">);</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;main:&quot;</span><span style="color: #333333">);</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;pushl   %ebp&quot;</span><span style="color: #333333">);</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;movl    %esp, %ebp&quot;</span><span style="color: #333333">);</span>
+		
+		<span style="color: #333399; font-weight: bold">int</span> FinalResult <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">;</span>
+
+		<span style="color: #008800; font-weight: bold">while</span><span style="color: #333333">(</span><span style="color: #008800; font-weight: bold">true</span><span style="color: #333333">)</span>
+		<span style="color: #333333">{</span>	input <span style="color: #333333">=</span> in<span style="color: #333333">.</span><span style="color: #0000CC">nextLine</span><span style="color: #333333">();</span>
+			<span style="color: #008800; font-weight: bold">if</span><span style="color: #333333">(</span>input<span style="color: #333333">.</span><span style="color: #0000CC">equals</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot; &quot;</span><span style="color: #333333">))</span>
+				<span style="color: #008800; font-weight: bold">break</span><span style="color: #333333">;</span>
+
+			StringTokenizer st <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> StringTokenizer<span style="color: #333333">(</span>input<span style="color: #333333">,</span><span style="background-color: #fff0f0">&quot; &quot;</span><span style="color: #333333">);</span>
+			<span style="color: #008800; font-weight: bold">while</span><span style="color: #333333">(</span>st<span style="color: #333333">.</span><span style="color: #0000CC">hasMoreTokens</span><span style="color: #333333">())</span>
+			<span style="color: #333333">{</span>	System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">();</span>
+				String operator <span style="color: #333333">=</span> st<span style="color: #333333">.</span><span style="color: #0000CC">nextToken</span><span style="color: #333333">();</span>
+				String arg1     <span style="color: #333333">=</span> st<span style="color: #333333">.</span><span style="color: #0000CC">nextToken</span><span style="color: #333333">();</span>
+				String arg2     <span style="color: #333333">=</span> st<span style="color: #333333">.</span><span style="color: #0000CC">nextToken</span><span style="color: #333333">();</span>
+				String result   <span style="color: #333333">=</span> st<span style="color: #333333">.</span><span style="color: #0000CC">nextToken</span><span style="color: #333333">();</span>
+				<span style="color: #008800; font-weight: bold">if</span><span style="color: #333333">(</span>operator<span style="color: #333333">.</span><span style="color: #0000CC">equals</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;=&quot;</span><span style="color: #333333">))</span>
+				<span style="color: #333333">{</span>	System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;movl &quot;</span><span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+				<span style="color: #008800; font-weight: bold">else</span> <span style="color: #0066BB; font-weight: bold">if</span><span style="color: #333333">(</span>operator<span style="color: #333333">.</span><span style="color: #0000CC">equals</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;+&quot;</span><span style="color: #333333">))</span>
+				<span style="color: #333333">{</span>	System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;addl &quot;</span><span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+				
+				<span style="color: #008800; font-weight: bold">if</span><span style="color: #333333">(</span>Character<span style="color: #333333">.</span><span style="color: #0000CC">isDigit</span><span style="color: #333333">(</span>arg1<span style="color: #333333">.</span><span style="color: #0000CC">charAt</span><span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">)))</span>
+				<span style="color: #333333">{</span>	System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;$&quot;</span><span style="color: #333333">+</span>arg1<span style="color: #333333">);</span>	
+					FinalResult <span style="color: #333333">+=</span> Integer<span style="color: #333333">.</span><span style="color: #0000CC">parseInt</span><span style="color: #333333">(</span>arg1<span style="color: #333333">);</span>
+				<span style="color: #333333">}</span>
+				<span style="color: #008800; font-weight: bold">else</span> <span style="color: #0066BB; font-weight: bold">if</span><span style="color: #333333">(</span>arg1<span style="color: #333333">.</span><span style="color: #0000CC">equals</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;eax&quot;</span><span style="color: #333333">))</span>
+				<span style="color: #333333">{</span>	System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;%&quot;</span><span style="color: #333333">+</span>arg1<span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+				<span style="color: #008800; font-weight: bold">else</span>
+				<span style="color: #333333">{</span>	System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span>arg1<span style="color: #333333">);</span>		<span style="color: #333333">}</span>
+
+				<span style="color: #008800; font-weight: bold">if</span><span style="color: #333333">(</span>result<span style="color: #333333">.</span><span style="color: #0000CC">equals</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;eax&quot;</span><span style="color: #333333">))</span>
+				<span style="color: #333333">{</span>       System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;, %&quot;</span><span style="color: #333333">+</span>result<span style="color: #333333">);</span>     <span style="color: #333333">}</span>
+				<span style="color: #008800; font-weight: bold">else</span>
+				<span style="color: #333333">{</span>       System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">print</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot; ,&quot;</span><span style="color: #333333">+</span>result<span style="color: #333333">);</span>        <span style="color: #333333">}</span>
+
+			<span style="color: #333333">}</span>
+		<span style="color: #333333">}</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;\npushl   z&quot;</span><span style="color: #333333">);</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;pushl   $msg&quot;</span><span style="color: #333333">);</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;call    printf&quot;</span><span style="color: #333333">);</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;leave&quot;</span><span style="color: #333333">);</span>
+		System<span style="color: #333333">.</span><span style="color: #0000CC">out</span><span style="color: #333333">.</span><span style="color: #0000CC">println</span><span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;ret&quot;</span><span style="color: #333333">);</span>
+
+		<span style="color: #888888">//System.out.println(&quot;Final Result of LHS variable :&quot;+FinalResult);</span>
+
+	<span style="color: #333333">}</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">calc.l</span>
+<span style="color: #888888">*************************************************/</span>
+Contents of <span style="color: #997700; font-weight: bold">file:</span> calcu<span style="color: #333333">.</span><span style="color: #0000CC">l</span>     <span style="color: #333333">(</span>This is the lex source file<span style="color: #333333">)</span>
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="background-color: #fff0f0">&quot;y.tab.h&quot;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>ctype<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+extern	<span style="color: #333399; font-weight: bold">int</span>	yylval<span style="color: #333333">;</span>
+<span style="color: #333333">%}</span>
+<span style="color: #333333">%%</span>
+<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]+</span>	<span style="color: #333333">{</span>
+	yylval <span style="color: #333333">=</span> atoi<span style="color: #333333">(</span>yytext<span style="color: #333333">);</span>
+	<span style="color: #008800; font-weight: bold">return</span><span style="color: #333333">(</span>NUMBER<span style="color: #333333">);</span>
+<span style="color: #333333">}</span>
+<span style="background-color: #fff0f0">&quot;+&quot;</span><span style="color: #333333">|</span><span style="background-color: #fff0f0">&quot;-&quot;</span><span style="color: #333333">|</span><span style="background-color: #fff0f0">&quot;*&quot;</span><span style="color: #333333">|</span><span style="background-color: #fff0f0">&quot;/&quot;</span><span style="color: #333333">|</span><span style="background-color: #fff0f0">&quot;(&quot;</span><span style="color: #333333">|</span><span style="background-color: #fff0f0">&quot;)&quot;</span><span style="color: #333333">|</span><span style="background-color: #fff0f0">&quot;\n&quot;</span>	<span style="color: #333333">{</span> <span style="color: #008800; font-weight: bold">return</span><span style="color: #333333">(</span>yytext<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">]);</span>	<span style="color: #333333">}</span>
+<span style="color: #333333">%%</span>
+
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">calc.y</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #333333">%}</span>
+<span style="color: #333333">%</span>token	NUMBER<span style="color: #333333">,</span><span style="background-color: #fff0f0">&quot;)&quot;</span><span style="color: #333333">,</span><span style="background-color: #fff0f0">&quot;(&quot;</span>
+<span style="color: #333333">%</span>left	<span style="background-color: #fff0f0">&quot;+&quot;</span><span style="color: #333333">,</span> <span style="background-color: #fff0f0">&quot;-&quot;</span>
+<span style="color: #333333">%</span>left	<span style="background-color: #fff0f0">&quot;*&quot;</span><span style="color: #333333">,</span> <span style="background-color: #fff0f0">&quot;/&quot;</span>
+<span style="color: #333333">%%</span>
+<span style="color: #997700; font-weight: bold">list:</span>	  <span style="color: #888888">/* Nothing */</span>
+	<span style="color: #333333">|</span> list expr <span style="background-color: #fff0f0">&quot;\n&quot;</span>	<span style="color: #333333">{</span> printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;Result: %d\n&quot;</span><span style="color: #333333">,</span> $2<span style="color: #333333">);</span>	<span style="color: #333333">}</span>
+	<span style="color: #333333">|</span> list <span style="background-color: #fff0f0">&quot;\n&quot;</span>
+	<span style="color: #333333">;</span>
+<span style="color: #997700; font-weight: bold">expr:</span>	  NUMBER	<span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $1<span style="color: #333333">;</span> <span style="color: #333333">}</span>
+	<span style="color: #333333">|</span> expr <span style="background-color: #fff0f0">&quot;+&quot;</span> expr	<span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $1 <span style="color: #333333">+</span> $3<span style="color: #333333">;</span> <span style="color: #333333">}</span>
+	<span style="color: #333333">|</span> expr <span style="background-color: #fff0f0">&quot;-&quot;</span> expr	<span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $1 <span style="color: #333333">-</span> $3<span style="color: #333333">;</span>	<span style="color: #333333">}</span>
+	<span style="color: #333333">|</span> expr <span style="background-color: #fff0f0">&quot;*&quot;</span> expr	<span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $1 <span style="color: #333333">*</span> $3<span style="color: #333333">;</span> <span style="color: #333333">}</span>
+	<span style="color: #333333">|</span> expr <span style="background-color: #fff0f0">&quot;/&quot;</span> expr	<span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $1 <span style="color: #333333">/</span> $3<span style="color: #333333">;</span> <span style="color: #333333">}</span>
+	<span style="color: #333333">|</span> <span style="background-color: #fff0f0">&quot;(&quot;</span> expr <span style="background-color: #fff0f0">&quot;)&quot;</span>	<span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $2<span style="color: #333333">;</span> <span style="color: #333333">}</span>
+	<span style="color: #333333">;</span>
+<span style="color: #333333">%%</span>
+main<span style="color: #333333">()</span>
+<span style="color: #333333">{</span>
+	yyparse<span style="color: #333333">();</span>
+<span style="color: #333333">}</span>
+yyerror<span style="color: #333333">()</span>
+<span style="color: #333333">{</span>
+	printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;ERROR: Aborting Execution\n&quot;</span><span style="color: #333333">);</span>
+	exit<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">);</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">compiling</span>
+<span style="color: #888888">*************************************************/</span>
+Compilation<span style="color: #333333">,</span> Linking and Execution <span style="color: #997700; font-weight: bold">Steps:</span>
+<span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">.</span> lex calcu<span style="color: #333333">.</span><span style="color: #0000CC">l</span>
+<span style="color: #0000DD; font-weight: bold">2</span><span style="color: #333333">.</span> yacc <span style="color: #333333">-</span>d calcu<span style="color: #333333">.</span><span style="color: #0000CC">y</span>
+<span style="color: #0000DD; font-weight: bold">3</span><span style="color: #333333">.</span> cc <span style="color: #333333">-</span>c lex<span style="color: #333333">.</span><span style="color: #0000CC">yy</span><span style="color: #333333">.</span><span style="color: #0000CC">c</span>
+<span style="color: #0000DD; font-weight: bold">4</span><span style="color: #333333">.</span> cc <span style="color: #333333">-</span>c y<span style="color: #333333">.</span><span style="color: #0000CC">tab</span><span style="color: #333333">.</span><span style="color: #0000CC">c</span>
+<span style="color: #0000DD; font-weight: bold">5</span><span style="color: #333333">.</span> cc lex<span style="color: #333333">.</span><span style="color: #0000CC">yy</span><span style="color: #333333">.</span><span style="color: #0000CC">o</span> y<span style="color: #333333">.</span><span style="color: #0000CC">tab</span><span style="color: #333333">.</span><span style="color: #0000CC">o</span> <span style="color: #333333">-</span>ll <span style="color: #333333">-</span>o calcu
+<span style="color: #0000DD; font-weight: bold">6</span><span style="color: #333333">.</span> calcu
+
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">infix2postfix.l</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #888888">/*</span>
+<span style="color: #888888">  File: a.l</span>
+<span style="color: #888888">  Desc: Lexical Analyser</span>
+<span style="color: #888888">*/</span>
+
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="background-color: #fff0f0">&quot;y.tab.h&quot;</span>
+<span style="color: #888888">/*extern int yylval; */</span>
+<span style="color: #333333">%}</span>
+
+delim           <span style="color: #333333">[</span> <span style="color: #FF0000; background-color: #FFAAAA">\</span>t<span style="color: #FF0000; background-color: #FFAAAA">\</span>n<span style="color: #333333">]</span>
+ws              <span style="color: #333333">{</span>delim<span style="color: #333333">}+</span>
+letter		<span style="color: #333333">[</span>a<span style="color: #333333">-</span>zA<span style="color: #333333">-</span>Z<span style="color: #333333">]</span>
+l_		<span style="color: #333333">[</span>letter_<span style="color: #333333">]</span>
+digit		<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]</span>
+id		<span style="color: #333333">{</span>l_<span style="color: #333333">}({</span>l_<span style="color: #333333">}|{</span>digit<span style="color: #333333">})*</span>
+int_num		<span style="color: #333333">{</span>digit<span style="color: #333333">}+</span>
+
+<span style="color: #333333">%%</span>
+<span style="color: #333333">{</span>ws<span style="color: #333333">}</span>	<span style="color: #333333">{}</span>
+<span style="background-color: #fff0f0">&quot;+&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> PLUS<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;-&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> MINUS<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;*&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> MUL<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;/&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> DIV<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;(&quot;</span> <span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> LRP<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;)&quot;</span> <span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> RRP<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;;&quot;</span> <span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> SEMICOLON<span style="color: #333333">;}</span>
+<span style="color: #333333">{</span>int_num<span style="color: #333333">}</span> <span style="color: #333333">{</span>yylval<span style="color: #333333">.</span><span style="color: #0000CC">iVal</span> <span style="color: #333333">=</span> strtol<span style="color: #333333">(</span>yytext<span style="color: #333333">,</span> NULL<span style="color: #333333">,</span> <span style="color: #0000DD; font-weight: bold">10</span><span style="color: #333333">);</span> <span style="color: #008800; font-weight: bold">return</span> NUMBER<span style="color: #333333">;}</span>
+<span style="color: #333333">{</span>id<span style="color: #333333">}</span> 	<span style="color: #333333">{</span> <span style="color: #008800; font-weight: bold">return</span> ID<span style="color: #333333">;}</span>
+<span style="color: #333333">.</span>	<span style="color: #333333">{</span> printf <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;yylex:error:%s:\n&quot;</span><span style="color: #333333">,</span> yytext<span style="color: #333333">);}</span>
+
+
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">infix2postfix.y</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdlib<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>ctype<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>define MAX_LEN  <span style="color: #0000DD; font-weight: bold">10</span>
+<span style="color: #333333">%}</span>
+
+<span style="color: #333333">%</span>union <span style="color: #333333">{</span>
+  <span style="color: #333399; font-weight: bold">int</span> iVal<span style="color: #333333">;</span>
+  <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>sVal<span style="color: #333333">;</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #333333">%</span>token <span style="color: #333333">&lt;</span>iVal<span style="color: #333333">&gt;</span> NUMBER
+<span style="color: #333333">%</span>token EOLN PLUS MINUS MUL DIV LRP RRP 
+<span style="color: #333333">%</span>token SEMICOLON ID
+
+<span style="color: #333333">%</span>type <span style="color: #333333">&lt;</span>sVal<span style="color: #333333">&gt;</span> expr
+<span style="color: #888888">/*</span>
+<span style="color: #888888">  E -&gt; E + E | E * E | NUM | ID | (E)</span>
+<span style="color: #888888">  printf (&quot;T1:got %d * %d\n&quot;, $1, $3);</span>
+<span style="color: #888888">*/</span>
+<span style="color: #333333">%</span>left PLUS 
+<span style="color: #333333">%</span>left MUL
+
+
+<span style="color: #333333">%%</span>
+
+lines  <span style="color: #333333">:</span> lines expr SEMICOLON   
+         <span style="color: #333333">{</span> 
+           printf<span style="color: #333333">(</span> <span style="background-color: #fff0f0">&quot;The postfix expr is %s\n&quot;</span><span style="color: #333333">,</span> $2<span style="color: #333333">);</span>
+           free<span style="color: #333333">(</span>$2<span style="color: #333333">);</span>
+           printf<span style="color: #333333">(</span> <span style="background-color: #fff0f0">&quot;2:Pl enter yet another infix expr ending with ; or &lt;ctrl-d&gt; to quit : &quot;</span><span style="color: #333333">);</span>
+         <span style="color: #333333">}</span>
+       <span style="color: #333333">|</span> lines SEMICOLON  
+       <span style="color: #333333">|</span>   <span style="color: #888888">/*epsilon*/</span>    <span style="color: #333333">{</span> printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;1:Pl enter an infix expr ending with ; or &lt;ctrl-d&gt; to quit : &quot;</span><span style="color: #333333">);}</span>    
+       <span style="color: #333333">;</span>
+
+expr	 <span style="color: #333333">:</span> expr PLUS expr 
+         <span style="color: #333333">{</span> 
+           <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>res <span style="color: #333333">=</span> malloc<span style="color: #333333">(</span>strlen<span style="color: #333333">(</span>$1<span style="color: #333333">)+</span>strlen<span style="color: #333333">(</span>$3<span style="color: #333333">)</span> <span style="color: #333333">+</span> <span style="color: #0000DD; font-weight: bold">5</span><span style="color: #333333">);</span>
+           sprintf <span style="color: #333333">(</span>res<span style="color: #333333">,</span> <span style="background-color: #fff0f0">&quot;%s %s +&quot;</span><span style="color: #333333">,</span> $1<span style="color: #333333">,</span> $3<span style="color: #333333">);</span>
+           free<span style="color: #333333">(</span>$1<span style="color: #333333">);</span> free<span style="color: #333333">(</span>$3<span style="color: #333333">);</span>
+           $$ <span style="color: #333333">=</span> res<span style="color: #333333">;</span>
+         <span style="color: #333333">}</span>
+       <span style="color: #333333">|</span> expr MUL  expr         
+         <span style="color: #333333">{</span> 
+           <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>res <span style="color: #333333">=</span> malloc<span style="color: #333333">(</span>strlen<span style="color: #333333">(</span>$1<span style="color: #333333">)+</span>strlen<span style="color: #333333">(</span>$3<span style="color: #333333">)</span> <span style="color: #333333">+</span> <span style="color: #0000DD; font-weight: bold">5</span><span style="color: #333333">);</span>
+           sprintf <span style="color: #333333">(</span>res<span style="color: #333333">,</span> <span style="background-color: #fff0f0">&quot;%s %s *&quot;</span><span style="color: #333333">,</span> $1<span style="color: #333333">,</span> $3<span style="color: #333333">);</span>
+           free<span style="color: #333333">(</span>$1<span style="color: #333333">);</span> free<span style="color: #333333">(</span>$3<span style="color: #333333">);</span>
+           $$ <span style="color: #333333">=</span> res<span style="color: #333333">;</span>
+         <span style="color: #333333">}</span>
+       <span style="color: #333333">|</span> LRP expr  RRP           <span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $2<span style="color: #333333">;}</span>
+       <span style="color: #333333">|</span> NUMBER                  <span style="color: #333333">{</span> <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>res <span style="color: #333333">=</span> malloc<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">10</span><span style="color: #333333">);</span> sprintf <span style="color: #333333">(</span>res<span style="color: #333333">,</span> <span style="background-color: #fff0f0">&quot;%d&quot;</span><span style="color: #333333">,</span> $1<span style="color: #333333">);</span> $$ <span style="color: #333333">=</span> res<span style="color: #333333">;}</span>
+	     <span style="color: #333333">;</span>
+
+
+<span style="color: #333333">%%</span>
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">yyerror</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>msg<span style="color: #333333">)</span>
+<span style="color: #333333">{</span>
+  printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;error in input %s\n&quot;</span><span style="color: #333333">,</span> msg<span style="color: #333333">);</span>
+  exit<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">);</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">()</span>
+<span style="color: #333333">{</span>
+  
+
+  yyparse<span style="color: #333333">();</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">compiling</span>
+<span style="color: #888888">*************************************************/</span>
+$ yacc <span style="color: #333333">-</span>d a<span style="color: #333333">.</span><span style="color: #0000CC">y</span>
+$ lex a<span style="color: #333333">.</span><span style="color: #0000CC">l</span>
+$ gcc lex<span style="color: #333333">.</span><span style="color: #0000CC">yy</span><span style="color: #333333">.</span><span style="color: #0000CC">c</span> y<span style="color: #333333">.</span><span style="color: #0000CC">tab</span><span style="color: #333333">.</span><span style="color: #0000CC">c</span> <span style="color: #333333">-</span>ll <span style="color: #333333">-</span>o a
+$ <span style="color: #333333">./</span>a
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">infix2prefix</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #888888">/*</span>
+<span style="color: #888888">  File: a.l</span>
+<span style="color: #888888">  Desc: Lexical Analyser</span>
+<span style="color: #888888">*/</span>
+
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="background-color: #fff0f0">&quot;y.tab.h&quot;</span>
+<span style="color: #888888">/*extern int yylval; */</span>
+<span style="color: #333333">%}</span>
+
+delim           <span style="color: #333333">[</span> <span style="color: #FF0000; background-color: #FFAAAA">\</span>t<span style="color: #FF0000; background-color: #FFAAAA">\</span>n<span style="color: #333333">]</span>
+ws              <span style="color: #333333">{</span>delim<span style="color: #333333">}+</span>
+letter		<span style="color: #333333">[</span>a<span style="color: #333333">-</span>zA<span style="color: #333333">-</span>Z<span style="color: #333333">]</span>
+l_		<span style="color: #333333">[</span>letter_<span style="color: #333333">]</span>
+digit		<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]</span>
+id		<span style="color: #333333">{</span>l_<span style="color: #333333">}({</span>l_<span style="color: #333333">}|{</span>digit<span style="color: #333333">})*</span>
+int_num		<span style="color: #333333">{</span>digit<span style="color: #333333">}+</span>
+
+<span style="color: #333333">%%</span>
+<span style="color: #333333">{</span>ws<span style="color: #333333">}</span>	<span style="color: #333333">{}</span>
+<span style="background-color: #fff0f0">&quot;+&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> PLUS<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;-&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> MINUS<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;*&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> MUL<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;/&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> DIV<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;(&quot;</span> <span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> LRP<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;)&quot;</span> <span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> RRP<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;;&quot;</span> <span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> SEMICOLON<span style="color: #333333">;}</span>
+<span style="color: #333333">{</span>int_num<span style="color: #333333">}</span> <span style="color: #333333">{</span>yylval<span style="color: #333333">.</span><span style="color: #0000CC">iVal</span> <span style="color: #333333">=</span> strtol<span style="color: #333333">(</span>yytext<span style="color: #333333">,</span> NULL<span style="color: #333333">,</span> <span style="color: #0000DD; font-weight: bold">10</span><span style="color: #333333">);</span> <span style="color: #008800; font-weight: bold">return</span> NUMBER<span style="color: #333333">;}</span>
+<span style="color: #333333">{</span>id<span style="color: #333333">}</span> 	<span style="color: #333333">{</span> <span style="color: #008800; font-weight: bold">return</span> ID<span style="color: #333333">;}</span>
+<span style="color: #333333">.</span>	<span style="color: #333333">{</span> printf <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;yylex:error:%s:\n&quot;</span><span style="color: #333333">,</span> yytext<span style="color: #333333">);}</span>
+<span style="color: #888888">//========================================================================================</span>
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdlib<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>ctype<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>define MAX_LEN  <span style="color: #0000DD; font-weight: bold">10</span>
+
+<span style="color: #333333">%}</span>
+
+<span style="color: #333333">%</span>union <span style="color: #333333">{</span>
+  <span style="color: #333399; font-weight: bold">int</span> iVal<span style="color: #333333">;</span>
+  <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>sVal<span style="color: #333333">;</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #333333">%</span>token <span style="color: #333333">&lt;</span>iVal<span style="color: #333333">&gt;</span> NUMBER
+<span style="color: #333333">%</span>token EOLN PLUS MINUS MUL DIV LRP RRP 
+<span style="color: #333333">%</span>token SEMICOLON ID
+
+<span style="color: #333333">%</span>type <span style="color: #333333">&lt;</span>sVal<span style="color: #333333">&gt;</span> expr
+
+<span style="color: #888888">/*</span>
+<span style="color: #888888">  E -&gt; E + E | E * E | NUM | ID | (E)</span>
+<span style="color: #888888">  printf (&quot;T1:got %d * %d\n&quot;, $1, $3);</span>
+<span style="color: #888888">*/</span>
+<span style="color: #333333">%</span>left PLUS 
+<span style="color: #333333">%</span>left MUL
+
+
+<span style="color: #333333">%%</span>
+
+lines  <span style="color: #333333">:</span> lines expr SEMICOLON   
+         <span style="color: #333333">{</span> 
+           printf<span style="color: #333333">(</span> <span style="background-color: #fff0f0">&quot;The prefix expr is %s\n&quot;</span><span style="color: #333333">,</span> $2<span style="color: #333333">);</span>
+           free<span style="color: #333333">(</span>$2<span style="color: #333333">);</span>
+           printf<span style="color: #333333">(</span> <span style="background-color: #fff0f0">&quot;2:Pl enter yet another infix expr ending with ; or &lt;ctrl-d&gt; to quit : &quot;</span><span style="color: #333333">);</span>
+         <span style="color: #333333">}</span>
+       <span style="color: #333333">|</span> lines SEMICOLON  
+       <span style="color: #333333">|</span>  <span style="color: #888888">/*epsilon*/</span>    <span style="color: #333333">{</span> printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;1:Pl enter an infix expr ending with ; or &lt;ctrl-d&gt; to quit : &quot;</span><span style="color: #333333">);}</span>     
+       <span style="color: #333333">;</span>
+
+expr	 <span style="color: #333333">:</span> expr PLUS expr         
+         <span style="color: #333333">{</span> 
+           <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>res <span style="color: #333333">=</span> malloc<span style="color: #333333">(</span>strlen<span style="color: #333333">(</span>$1<span style="color: #333333">)+</span>strlen<span style="color: #333333">(</span>$3<span style="color: #333333">)</span> <span style="color: #333333">+</span> <span style="color: #0000DD; font-weight: bold">5</span><span style="color: #333333">);</span>
+           sprintf <span style="color: #333333">(</span>res<span style="color: #333333">,</span> <span style="background-color: #fff0f0">&quot;+ %s %s&quot;</span><span style="color: #333333">,</span> $1<span style="color: #333333">,</span> $3<span style="color: #333333">);</span>
+           free<span style="color: #333333">(</span>$1<span style="color: #333333">);</span> free<span style="color: #333333">(</span>$3<span style="color: #333333">);</span>
+           $$ <span style="color: #333333">=</span> res<span style="color: #333333">;</span>
+         <span style="color: #333333">}</span>
+       <span style="color: #333333">|</span> expr MUL  expr   
+         <span style="color: #333333">{</span> 
+           <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>res <span style="color: #333333">=</span> malloc<span style="color: #333333">(</span>strlen<span style="color: #333333">(</span>$1<span style="color: #333333">)+</span>strlen<span style="color: #333333">(</span>$3<span style="color: #333333">)</span> <span style="color: #333333">+</span> <span style="color: #0000DD; font-weight: bold">5</span><span style="color: #333333">);</span>
+           sprintf <span style="color: #333333">(</span>res<span style="color: #333333">,</span> <span style="background-color: #fff0f0">&quot;* %s %s&quot;</span><span style="color: #333333">,</span> $1<span style="color: #333333">,</span> $3<span style="color: #333333">);</span>
+           free<span style="color: #333333">(</span>$1<span style="color: #333333">);</span> free<span style="color: #333333">(</span>$3<span style="color: #333333">);</span>
+           $$ <span style="color: #333333">=</span> res<span style="color: #333333">;</span>
+         <span style="color: #333333">}</span>
+       <span style="color: #333333">|</span> LRP expr  RRP            <span style="color: #333333">{</span> $$ <span style="color: #333333">=</span> $2<span style="color: #333333">;}</span>
+       <span style="color: #333333">|</span> NUMBER                 <span style="color: #333333">{</span> <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>res <span style="color: #333333">=</span> malloc<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">10</span><span style="color: #333333">);</span> sprintf <span style="color: #333333">(</span>res<span style="color: #333333">,</span> <span style="background-color: #fff0f0">&quot;%d&quot;</span><span style="color: #333333">,</span> $1<span style="color: #333333">);</span> $$ <span style="color: #333333">=</span> res<span style="color: #333333">;}</span>
+	     <span style="color: #333333">;</span>
+
+
+<span style="color: #333333">%%</span>
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">yyerror</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>msg<span style="color: #333333">)</span>
+<span style="color: #333333">{</span>
+  printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;error in input %s\n&quot;</span><span style="color: #333333">,</span> msg<span style="color: #333333">);</span>
+  exit<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">);</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">()</span>
+<span style="color: #333333">{</span>
+  
+
+  yyparse<span style="color: #333333">();</span>
+<span style="color: #333333">}</span>
+<span style="color: #333333">==================================================</span>
+$ yacc <span style="color: #333333">-</span>d a<span style="color: #333333">.</span><span style="color: #0000CC">y</span>
+$ lex a<span style="color: #333333">.</span><span style="color: #0000CC">l</span>
+$ gcc lex<span style="color: #333333">.</span><span style="color: #0000CC">yy</span><span style="color: #333333">.</span><span style="color: #0000CC">c</span> y<span style="color: #333333">.</span><span style="color: #0000CC">tab</span><span style="color: #333333">.</span><span style="color: #0000CC">c</span> <span style="color: #333333">-</span>ll <span style="color: #333333">-</span>o a
+$ <span style="color: #333333">./</span>a
+<span style="color: #888888">/*************************************************</span>
+<span style="color: #888888">Postfix2infix</span>
+<span style="color: #888888">*************************************************/</span>
+<span style="color: #888888">/*</span>
+<span style="color: #888888">  File: a.l</span>
+<span style="color: #888888">  Desc: Lexical Analyser</span>
+<span style="color: #888888">*/</span>
+
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="background-color: #fff0f0">&quot;y.tab.h&quot;</span>
+<span style="color: #888888">/*extern int yylval; */</span>
+<span style="color: #333333">%}</span>
+
+delim           <span style="color: #333333">[</span> <span style="color: #FF0000; background-color: #FFAAAA">\</span>t<span style="color: #FF0000; background-color: #FFAAAA">\</span>n<span style="color: #333333">]</span>
+ws              <span style="color: #333333">{</span>delim<span style="color: #333333">}+</span>
+letter		<span style="color: #333333">[</span>a<span style="color: #333333">-</span>zA<span style="color: #333333">-</span>Z<span style="color: #333333">]</span>
+l_		<span style="color: #333333">[</span>letter_<span style="color: #333333">]</span>
+digit		<span style="color: #333333">[</span><span style="color: #0000DD; font-weight: bold">0</span><span style="color: #333333">-</span><span style="color: #0000DD; font-weight: bold">9</span><span style="color: #333333">]</span>
+id		<span style="color: #333333">{</span>l_<span style="color: #333333">}({</span>l_<span style="color: #333333">}|{</span>digit<span style="color: #333333">})*</span>
+int_num		<span style="color: #333333">{</span>digit<span style="color: #333333">}+</span>
+
+<span style="color: #333333">%%</span>
+<span style="color: #333333">{</span>ws<span style="color: #333333">}</span>	<span style="color: #333333">{}</span>
+<span style="background-color: #fff0f0">&quot;+&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> PLUS<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;-&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> MINUS<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;*&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> MUL<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;/&quot;</span>	<span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> DIV<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;(&quot;</span> <span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> LRP<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;)&quot;</span> <span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> RRP<span style="color: #333333">;}</span>
+<span style="background-color: #fff0f0">&quot;;&quot;</span> <span style="color: #333333">{</span><span style="color: #008800; font-weight: bold">return</span> SEMICOLON<span style="color: #333333">;}</span>
+<span style="color: #333333">{</span>int_num<span style="color: #333333">}</span> <span style="color: #333333">{</span>yylval<span style="color: #333333">.</span><span style="color: #0000CC">iVal</span> <span style="color: #333333">=</span> strtol<span style="color: #333333">(</span>yytext<span style="color: #333333">,</span> NULL<span style="color: #333333">,</span> <span style="color: #0000DD; font-weight: bold">10</span><span style="color: #333333">);</span> <span style="color: #008800; font-weight: bold">return</span> NUMBER<span style="color: #333333">;}</span>
+<span style="color: #333333">{</span>id<span style="color: #333333">}</span> 	<span style="color: #333333">{</span> <span style="color: #008800; font-weight: bold">return</span> ID<span style="color: #333333">;}</span>
+<span style="color: #333333">.</span>	<span style="color: #333333">{</span> printf <span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;yylex:error:%s:\n&quot;</span><span style="color: #333333">,</span> yytext<span style="color: #333333">);}</span>
+
+<span style="color: #888888">//=============================================================</span>
+<span style="color: #333333">%{</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdio<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>stdlib<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>include <span style="color: #333333">&lt;</span>ctype<span style="color: #333333">.</span><span style="color: #0000CC">h</span><span style="color: #333333">&gt;</span>
+<span style="color: #FF0000; background-color: #FFAAAA">#</span>define MAX_LEN  <span style="color: #0000DD; font-weight: bold">10</span>
+<span style="color: #333333">%}</span>
+
+<span style="color: #333333">%</span>union <span style="color: #333333">{</span>
+  <span style="color: #333399; font-weight: bold">int</span> iVal<span style="color: #333333">;</span>
+  <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>sVal<span style="color: #333333">;</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #333333">%</span>token <span style="color: #333333">&lt;</span>iVal<span style="color: #333333">&gt;</span> NUMBER
+<span style="color: #333333">%</span>token EOLN PLUS MINUS MUL DIV LRP RRP 
+<span style="color: #333333">%</span>token SEMICOLON ID
+
+<span style="color: #333333">%</span>type <span style="color: #333333">&lt;</span>sVal<span style="color: #333333">&gt;</span> expr
+<span style="color: #888888">/*</span>
+<span style="color: #888888">  E -&gt; E + E | E * E | NUM | ID | (E)</span>
+<span style="color: #888888">  printf (&quot;T1:got %d * %d\n&quot;, $1, $3);</span>
+
+<span style="color: #888888">%left PLUS </span>
+<span style="color: #888888">%left MUL</span>
+<span style="color: #888888">*/</span>
+
+<span style="color: #333333">%%</span>
+
+lines  <span style="color: #333333">:</span> lines expr SEMICOLON   
+         <span style="color: #333333">{</span> 
+           printf<span style="color: #333333">(</span> <span style="background-color: #fff0f0">&quot;The infix expr is %s\n&quot;</span><span style="color: #333333">,</span> $2<span style="color: #333333">);</span>
+           free<span style="color: #333333">(</span>$2<span style="color: #333333">);</span>
+           printf<span style="color: #333333">(</span> <span style="background-color: #fff0f0">&quot;2:Pl enter yet another postfix expr ending with ; or &lt;ctrl-d&gt; to quit : &quot;</span><span style="color: #333333">);</span>
+         <span style="color: #333333">}</span>
+       <span style="color: #333333">|</span> lines SEMICOLON  
+       <span style="color: #333333">|</span>   <span style="color: #888888">/*epsilon*/</span>    <span style="color: #333333">{</span> printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;1:Pl enter a postfix expr ending with ; or &lt;ctrl-d&gt; to quit : &quot;</span><span style="color: #333333">);}</span>    
+       <span style="color: #333333">;</span>
+
+expr	 <span style="color: #333333">:</span> expr expr PLUS
+         <span style="color: #333333">{</span> 
+           <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>res <span style="color: #333333">=</span> malloc<span style="color: #333333">(</span>strlen<span style="color: #333333">(</span>$1<span style="color: #333333">)+</span>strlen<span style="color: #333333">(</span>$2<span style="color: #333333">)</span> <span style="color: #333333">+</span> <span style="color: #0000DD; font-weight: bold">5</span><span style="color: #333333">);</span>
+           sprintf <span style="color: #333333">(</span>res<span style="color: #333333">,</span> <span style="background-color: #fff0f0">&quot; (%s + %s) &quot;</span><span style="color: #333333">,</span> $1<span style="color: #333333">,</span> $2<span style="color: #333333">);</span>
+           free<span style="color: #333333">(</span>$1<span style="color: #333333">);</span> free<span style="color: #333333">(</span>$2<span style="color: #333333">);</span>
+           $$ <span style="color: #333333">=</span> res<span style="color: #333333">;</span>
+         <span style="color: #333333">}</span>
+       <span style="color: #333333">|</span> expr expr  MUL       
+         <span style="color: #333333">{</span> 
+           <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>res <span style="color: #333333">=</span> malloc<span style="color: #333333">(</span>strlen<span style="color: #333333">(</span>$1<span style="color: #333333">)+</span>strlen<span style="color: #333333">(</span>$2<span style="color: #333333">)</span> <span style="color: #333333">+</span> <span style="color: #0000DD; font-weight: bold">5</span><span style="color: #333333">);</span>
+           sprintf <span style="color: #333333">(</span>res<span style="color: #333333">,</span> <span style="background-color: #fff0f0">&quot; (%s * %s) &quot;</span><span style="color: #333333">,</span> $1<span style="color: #333333">,</span> $2<span style="color: #333333">);</span>
+           free<span style="color: #333333">(</span>$1<span style="color: #333333">);</span> free<span style="color: #333333">(</span>$2<span style="color: #333333">);</span>
+           $$ <span style="color: #333333">=</span> res<span style="color: #333333">;</span>
+         <span style="color: #333333">}</span>
+       <span style="color: #333333">|</span> NUMBER                  <span style="color: #333333">{</span> <span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>res <span style="color: #333333">=</span> malloc<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">10</span><span style="color: #333333">);</span> sprintf <span style="color: #333333">(</span>res<span style="color: #333333">,</span> <span style="background-color: #fff0f0">&quot;%d&quot;</span><span style="color: #333333">,</span> $1<span style="color: #333333">);</span> $$ <span style="color: #333333">=</span> res<span style="color: #333333">;}</span>
+	     <span style="color: #333333">;</span>
+
+
+<span style="color: #333333">%%</span>
+<span style="color: #333399; font-weight: bold">void</span> <span style="color: #0066BB; font-weight: bold">yyerror</span><span style="color: #333333">(</span><span style="color: #333399; font-weight: bold">char</span> <span style="color: #333333">*</span>msg<span style="color: #333333">)</span>
+<span style="color: #333333">{</span>
+  printf<span style="color: #333333">(</span><span style="background-color: #fff0f0">&quot;error in input %s\n&quot;</span><span style="color: #333333">,</span> msg<span style="color: #333333">);</span>
+  exit<span style="color: #333333">(</span><span style="color: #0000DD; font-weight: bold">1</span><span style="color: #333333">);</span>
+<span style="color: #333333">}</span>
+
+<span style="color: #333399; font-weight: bold">int</span> <span style="color: #0066BB; font-weight: bold">main</span><span style="color: #333333">()</span>
+<span style="color: #333333">{</span>
+  
+
+  yyparse<span style="color: #333333">();</span>
+<span style="color: #333333">}</span>
+<span style="color: #888888">//=====================================================================================</span>
+$ yacc <span style="color: #333333">-</span>d a<span style="color: #333333">.</span><span style="color: #0000CC">y</span>
+$ lex a<span style="color: #333333">.</span><span style="color: #0000CC">l</span>
+$ gcc lex<span style="color: #333333">.</span><span style="color: #0000CC">yy</span><span style="color: #333333">.</span><span style="color: #0000CC">c</span> y<span style="color: #333333">.</span><span style="color: #0000CC">tab</span><span style="color: #333333">.</span><span style="color: #0000CC">c</span> <span style="color: #333333">-</span>ll <span style="color: #333333">-</span>o a
+$ <span style="color: #333333">./</span>a
+<span style="color: #333333">./</span>a
+<span style="color: #333333">=======================================================================================</span>
+</pre></div>
