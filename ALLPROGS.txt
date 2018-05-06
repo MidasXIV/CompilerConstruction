@@ -1,0 +1,958 @@
+/************************************************/
+Identifier.l
+*************************************************/
+%{
+#include<stdio.h>
+int lineno = 0;
+%}
+constant (int|char|float)
+operator (<|>|"++"|"--"|"+"|"-"|"*")
+keywords (if|while|do|for|switch)
+digit [0-9]
+letter [a-zA-Z]
+identi {letter}({letter}|{digit})*
+integer {digit}*
+%%
+{constant} {printf("\n");ECHO;printf(" constant %d",lineno);	}
+{operator} {printf("\n");ECHO;printf(" operator %d",lineno);	}
+{keywords} {printf("\n");ECHO;printf(" keyword %d",lineno);	}
+{digit}* {printf("\n");ECHO;printf(" Integer %d",lineno);	}
+{identi} {printf("\n");ECHO;printf(" identifier %d",lineno);	}
+" " ;
+"\t" ;
+. "";
+\n {lineno++;	}
+%%
+main()
+{
+yylex();
+}
+int yywrap()
+{
+return 1;
+}
+/************************************************/
+ Date.l
+*************************************************/
+%{
+#include<stdio.h>
+%}
+la ([0-2][0-9]|[3][0-1])\/((0(1|3|5|7|8))|(10|12))\/([1-2][0-9][0-9][0-9])
+lb ([0-2][0-9]|30)\/((0(4|6|9))|11)\/([1-2][0-9][0-9][0-9])
+lc ([0-1][0-9]|2[0-8])\/02\/([1-2][0-9][0-9][0-9])
+ld 29\/02\/([1-2][0-9][0-9][0-9])
+ver {la}|{lb}|{lc}|{ld}
+%%
+{ver} { //printf("WORKS");
+	printf("It is a valid date\n");
+	printf("%c%c/",yytext[3],yytext[4]);
+	printf("%c%c/",yytext[0],yytext[1]);
+	printf("%c%c%c%c",yytext[6],yytext[7],yytext[8],yytext[9]);
+    }
+.\n{
+	printf("INCORRECT DATE");
+}
+%%
+main()
+{
+yylex();
+}
+int yywrap(void)
+{
+return 1;
+}
+/*************************************************
+Count0s1s.l
+*************************************************/
+%{
+#include <stdio.h>
+#include "y.tab.h"
+%}
+%%
+"0"     { return ZERO; }
+"1"     { return ONE; }
+.       { printf ("yylex:error:%s\n", yytext);}
+%%
+/*************************************************
+Count0s1s.y
+*************************************************/
+%{
+#include<stdio.h>
+int count0 = 0,count1 = 0;
+%}
+%token ZERO ONE
+%%
+S   : A
+    {
+      printf("Count 0 = %d, Count 1 = %d\n", count0, count1);
+    }
+A   : ZERO S {count0++; }
+    | ZERO {count0++; }
+    | ONE {count1++; }
+    | ONE S {count1++; }
+    ;
+%%
+void yyerror(char *msg)
+{
+     printf("error in input %s\n", msg);
+     exit(1);
+}
+int main()
+{
+     int i;
+     yyparse();
+}
+/*************************************************
+Postfix.l evaluator
+*************************************************/
+/* Lex Source for Post Fix Evaluation : Example program
+  File: a.l
+  Desc: Lexical Analyser
+*/
+
+%{
+#include <stdio.h>
+#include "y.tab.h"
+/*extern int yylval; */
+%}
+
+delim           [ \t\n]
+ws              {delim}+
+letter		[a-zA-Z]
+l_		[letter_]
+digit		[0-9]
+id		{l_}({l_}|{digit})*
+int_num		{digit}+
+
+%%
+{ws}	{}
+"+"	{return PLUS;}
+"-"	{return MINUS;}
+"*"	{return MUL;}
+"/"	{return DIV;}
+"(" {return LRP;}
+")" {return RRP;}
+";" {return SEMICOLON;}
+{int_num} {yylval.iVal = strtol(yytext, NULL, 10); return NUMBER;}
+{id} 	{ return ID;}
+.	{ printf ("yylex:error:%s:\n", yytext);}
+%%
+
+/*************************************************
+Postfix.y evaluator
+*************************************************/
+/* YACC Source for Post Fix Evaluation : Example program
+  File: a.y
+  Desc: Parser Generator
+*/
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#define MAX_LEN  10
+%}
+%union {
+  int iVal;
+  char *sVal;
+}
+
+%token <iVal> NUMBER
+%token EOLN PLUS MINUS MUL DIV LRP RRP 
+%token SEMICOLON ID
+
+%type <iVal> expr
+/*
+  E -> E  E + |  E E *  | NUM | ID 
+  printf ("T1:got %d * %d\n", $1, $3);
+
+%left PLUS 
+%left MUL
+*/
+
+%%
+
+lines  : lines expr SEMICOLON   
+         { 
+           printf( "The postfix expr result = %d\n", $2);
+           printf( "2:Pl enter yet another postfix expr ending with ; or <ctrl-d> to quit : ");
+         }
+       | lines SEMICOLON  
+       |   /*epsilon*/    { printf("1:Pl enter an postfix expr ending with ; or <ctrl-d> to quit : ");}    
+       ;
+
+expr	 : expr expr PLUS          { $$ = $1 + $2; }
+       | expr expr MUL           { $$ = $1 * $2; } 
+       | NUMBER                  { $$ = $1;}
+	     ;
+
+%%
+void yyerror(char *msg)
+{
+  printf("error in input %s\n", msg);
+  exit(1);
+}
+
+int main()
+{      yyparse();           }
+/*************************************************
+Prefix.l
+*************************************************/
+/* Lex Source for Post Fix Evaluation : Example program
+  File: a.l
+  Desc: Lexical Analyser
+*/
+
+%{
+#include <stdio.h>
+#include "y.tab.h"
+/*extern int yylval; */
+%}
+
+delim           [ \t\n]
+ws              {delim}+
+letter		[a-zA-Z]
+l_		[letter_]
+digit		[0-9]
+id		{l_}({l_}|{digit})*
+int_num		{digit}+
+
+%%
+{ws}	{}
+"+"	{return PLUS;}
+"-"	{return MINUS;}
+"*"	{return MUL;}
+"/"	{return DIV;}
+"(" {return LRP;}
+")" {return RRP;}
+";" {return SEMICOLON;}
+{int_num} {yylval.iVal = strtol(yytext, NULL, 10); return NUMBER;}
+{id} 	{ return ID;}
+.	{ printf ("yylex:error:%s:\n", yytext);}
+%%
+
+/*************************************************
+Prefix.y
+*************************************************/
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#define MAX_LEN  10
+%}
+%union {
+  int iVal;
+  char *sVal;
+}
+
+%token EOLN PLUS MINUS MUL DIV LRP RRP
+%token <iVal> NUMBER 
+%token SEMICOLON ID
+
+%type <iVal> expr
+/*
+  E -> E  E + |  E E *  | NUM | ID 
+  printf ("T1:got %d * %d\n", $1, $3);
+
+%left PLUS 
+%left MUL
+*/
+
+%%
+
+lines  : lines expr SEMICOLON   
+         { 
+           printf( "The prefix expr result = %d\n", $2);
+           printf( "2:Pl enter yet another prefix expr ending with ; or <ctrl-d> to quit : ");
+         }
+       | lines SEMICOLON  
+       |   /*epsilon*/    { printf("1:Pl enter an prefix expr ending with ; or <ctrl-d> to quit : ");}    
+       ;
+
+expr	 : PLUS expr expr          { $$ = $2 + $3; }
+	   | MINUS expr expr          { $$ = $2 - $3; }
+       | MUL expr expr           { $$ = $2 * $3; } 
+       | DIV expr expr           { $$ = $2 / $3; } 
+       | NUMBER                  { $$ = $1;}
+	     ;
+
+%%
+void yyerror(char *msg)
+{
+  printf("error in input %s\n", msg);
+  exit(1);
+}
+
+int main()
+{      yyparse();           }
+
+/*************************************************
+textTOHtml.l
+*************************************************/
+%{
+#include <stdio.h>
+#include "y.tab.h"
+%}
+id 20(0|1)[0-9]A[1-9A]((P|T)S)[0-9]{3}U
+name [a-zA-Z]+
+date (0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)[0-9][0-9]
+cgpa ([0-9]\.[0-9]{2})|(10\.00)
+%%
+{id} { return ID; }
+{name} { return NAME; }
+{date} { return DATE; }
+{cgpa} { return CGPA; }
+\n { return NL; }
+%%
+/*************************************************
+textTOHtml.y
+*************************************************/
+%{
+#include <stdio.h>
+#include <stdlib.h>
+extern char *yytext;
+%}
+
+%union
+{
+  char *sVal;
+  int iVal;
+}
+ %token < sVal > ID NAME DATE CGPA NL %% xxx:data NL xxx | data NL;
+data:id name date cgpa;
+id:ID
+{
+  printf ("<p>\n %s", yytext);
+};
+name:NAME
+{
+  printf (" %s", yytext);
+};
+date:DATE
+{
+  printf (" %s", yytext);
+};
+cgpa:CGPA
+{
+  printf ("%s\n  </p>\n", yytext);
+};
+%%yyerror (char *msg)
+{
+  printf ("Error: %s\n", msg);
+}
+int
+main ()
+{
+  printf ("<DOCTYPE html>\n");
+  printf ("<html>\n");
+  printf ("<body>\n");
+  yyparse ();
+  printf ("</html>\n");
+  return 0;
+}
+/*************************************************
+HashTable.java
+*************************************************/
+import java.util.*;
+import java.io.*;
+
+class HashTable
+{
+	public static void main(String[] args)
+  	{
+  		Scanner inp = new Scanner(System.in);
+  		String input = inp.nextLine();
+  		int hashvalue = 0;
+      		int count = 0;
+  		Hashtable Hashes = new Hashtable();
+  		Enumeration s2h;
+      
+      	while(!input.equals(" "))
+  		{	int a =0,b=0;
+          	for (int i=0; i<input.length(); i++)
+ 			{	int c = (int)input.charAt(i);
+				if ((c >=65 && c <=90) ||(c >=97 && c <=122))
+		        	{  a += c;  }
+     			  	else if (c >=48 && c <=57)
+       				{  b += c;  }
+			
+				hashvalue = ((a + b*2)*17+5) % 6;
+				Hashes.put(input,hashvalue);
+      			input = inp.nextLine();
+			}
+		}
+		System.out.println();
+		s2h = Hashes.keys();
+		String str;
+  		
+		while(s2h.hasMoreElements()) 
+    		{	str = (String) s2h.nextElement();
+       			System.out.println(str + ": " + Hashes.get(str));
+    		} 		
+	}
+}
+
+/*************************************************
+IntermediateCode.java
+*************************************************/
+/*
+Aman Shaikh
+2015A7PS0039U
+30/3/2018
+*/
+import java.util.*;
+
+public class IntermediateCode
+{	
+	public static String num_regex = "\\d+";
+	public static String id_regex  = "[a-zA-z]+[0-9]*";
+	public static String term_regex = num_regex+"|"+id_regex;
+	public static String expr_regex = "("+term_regex+")(-("+term_regex+"))*"; 
+	public static String Stmt_regex = id_regex+"="+expr_regex;
+	
+	
+	public static boolean isId(String t)
+	{	return t.matches(id_regex);	}
+	
+	public static boolean isNumber(String t)
+	{	return t.matches(num_regex);	}
+	
+	public static boolean isStmt(String t)
+	{	return t.matches(Stmt_regex);	}
+	
+	public static boolean isExpr(String t)
+	{	return t.matches(expr_regex);	}
+	
+	public static boolean isTerm(String t)
+	{	return t.matches(term_regex);	}
+	
+	public static void printRow(String i,String o,String a1,String a2,String r)
+	{		System.out.println();
+			System.out.print("|| "+i);
+			System.out.print("\t\t || "+o);
+			System.out.print("\t\t || "+a1);
+			System.out.print("\t\t || "+a2);
+			System.out.print("\t\t || "+r);
+			//System.out.print("\t ||");
+	}
+	public static void main(String[] args)
+	{		
+		Scanner in = new Scanner(System.in);
+		String input = in.nextLine();
+		/*
+		System.out.println("NUMBER : "+input.matches(num_regex));
+		System.out.println("ID     : "+input.matches(id_regex));
+		System.out.println("TERM   : "+input.matches(term_regex));
+		System.out.println("EXPR   : "+input.matches(expr_regex));
+		System.out.println("STMT   : "+input.matches(Stmt_regex));
+		*/
+		if(input.matches(Stmt_regex))
+		{	System.out.println(input+" is a valid Statement");	}
+		else
+		{	System.out.println(input+" is an invalid Statement\nTry again");	
+			return;
+		}
+		System.out.print("|| INPUT\t\t || OP\t\t || ARG1\t || ARG2\t || RESULT");
+		String[] token = input.split("=");
+		String[] expr_token = token[1].split("-");
+		
+		int count = 0;
+		//System.out.println(token.length+" "+expr_token.length);
+		//System.out.println(token[0]+" is your ID");
+		//System.out.println(token[1]+" is your expr "+isExpr(token[1]));
+		if(expr_token.length == 1)
+		{	/*
+			//System.out.println();
+			System.out.print("|| "+input);
+			System.out.print("\t\t|| =");
+			System.out.print("\t || "+token[1]);
+			System.out.print("\t\t || nill");
+			System.out.print("\t || "+token[0]);
+			//System.out.print("\t ||");
+			*/
+			printRow(input,"=",token[1],"nill",token[0]);
+			return;
+		}
+		else
+		{	String pretemp="";
+			String temp="";
+			for(int i = 0; i < expr_token.length-1; i++)
+			{	pretemp = "temp"+count++;
+				temp = "temp"+count;
+				if( i==0 )
+				{	printRow("        ","-",expr_token[i],expr_token[i+1],temp);	}
+				else
+				{	printRow("        ","-",pretemp,expr_token[i+1],temp);	}
+			}
+			printRow(input,"=",temp,"nil",token[0]);
+		}
+		
+		
+	}
+}
+
+/*************************************************
+CodeGeneration.java
+*************************************************/
+import java.util.*;
+public class CodeGeneration
+{
+	public static void main(String[] args)
+	{
+		Scanner in = new Scanner(System.in);
+		String input = "";
+
+		System.out.println(".global main");
+		System.out.println("msg:");
+		System.out.println(".string \"Final result of LHS var = %d\\n\"");
+		System.out.println(".comm   a,4");
+		System.out.println(".comm   b,4");
+		System.out.println(".comm   c,4");
+		System.out.println(".comm   z,4");
+		System.out.println("main:");
+		System.out.println("pushl   %ebp");
+		System.out.println("movl    %esp, %ebp");
+		
+		int FinalResult = 0;
+
+		while(true)
+		{	input = in.nextLine();
+			if(input.equals(" "))
+				break;
+
+			StringTokenizer st = new StringTokenizer(input," ");
+			while(st.hasMoreTokens())
+			{	System.out.println();
+				String operator = st.nextToken();
+				String arg1     = st.nextToken();
+				String arg2     = st.nextToken();
+				String result   = st.nextToken();
+				if(operator.equals("="))
+				{	System.out.print("movl ");	}
+				else if(operator.equals("+"))
+				{	System.out.print("addl ");	}
+				
+				if(Character.isDigit(arg1.charAt(0)))
+				{	System.out.print("$"+arg1);	
+					FinalResult += Integer.parseInt(arg1);
+				}
+				else if(arg1.equals("eax"))
+				{	System.out.print("%"+arg1);	}
+				else
+				{	System.out.print(arg1);		}
+
+				if(result.equals("eax"))
+				{       System.out.print(", %"+result);     }
+				else
+				{       System.out.print(" ,"+result);        }
+
+			}
+		}
+		System.out.println("\npushl   z");
+		System.out.println("pushl   $msg");
+		System.out.println("call    printf");
+		System.out.println("leave");
+		System.out.println("ret");
+
+		//System.out.println("Final Result of LHS variable :"+FinalResult);
+
+	}
+}
+
+/*************************************************
+calc.l
+*************************************************/
+Contents of file: calcu.l     (This is the lex source file)
+%{
+#include "y.tab.h"
+#include <ctype.h>
+extern	int	yylval;
+%}
+%%
+[0-9]+	{
+	yylval = atoi(yytext);
+	return(NUMBER);
+}
+"+"|"-"|"*"|"/"|"("|")"|"\n"	{ return(yytext[0]);	}
+%%
+
+/*************************************************
+calc.y
+*************************************************/
+%{
+#include <stdio.h>
+%}
+%token	NUMBER,")","("
+%left	"+", "-"
+%left	"*", "/"
+%%
+list:	  /* Nothing */
+	| list expr "\n"	{ printf("Result: %d\n", $2);	}
+	| list "\n"
+	;
+expr:	  NUMBER	{ $$ = $1; }
+	| expr "+" expr	{ $$ = $1 + $3; }
+	| expr "-" expr	{ $$ = $1 - $3;	}
+	| expr "*" expr	{ $$ = $1 * $3; }
+	| expr "/" expr	{ $$ = $1 / $3; }
+	| "(" expr ")"	{ $$ = $2; }
+	;
+%%
+main()
+{
+	yyparse();
+}
+yyerror()
+{
+	printf("ERROR: Aborting Execution\n");
+	exit(1);
+}
+
+/*************************************************
+compiling
+*************************************************/
+Compilation, Linking and Execution Steps:
+1. lex calcu.l
+2. yacc -d calcu.y
+3. cc -c lex.yy.c
+4. cc -c y.tab.c
+5. cc lex.yy.o y.tab.o -ll -o calcu
+6. calcu
+
+/*************************************************
+infix2postfix.l
+*************************************************/
+/*
+  File: a.l
+  Desc: Lexical Analyser
+*/
+
+%{
+#include <stdio.h>
+#include "y.tab.h"
+/*extern int yylval; */
+%}
+
+delim           [ \t\n]
+ws              {delim}+
+letter		[a-zA-Z]
+l_		[letter_]
+digit		[0-9]
+id		{l_}({l_}|{digit})*
+int_num		{digit}+
+
+%%
+{ws}	{}
+"+"	{return PLUS;}
+"-"	{return MINUS;}
+"*"	{return MUL;}
+"/"	{return DIV;}
+"(" {return LRP;}
+")" {return RRP;}
+";" {return SEMICOLON;}
+{int_num} {yylval.iVal = strtol(yytext, NULL, 10); return NUMBER;}
+{id} 	{ return ID;}
+.	{ printf ("yylex:error:%s:\n", yytext);}
+
+
+/*************************************************
+infix2postfix.y
+*************************************************/
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#define MAX_LEN  10
+%}
+
+%union {
+  int iVal;
+  char *sVal;
+}
+
+%token <iVal> NUMBER
+%token EOLN PLUS MINUS MUL DIV LRP RRP 
+%token SEMICOLON ID
+
+%type <sVal> expr
+/*
+  E -> E + E | E * E | NUM | ID | (E)
+  printf ("T1:got %d * %d\n", $1, $3);
+*/
+%left PLUS 
+%left MUL
+
+
+%%
+
+lines  : lines expr SEMICOLON   
+         { 
+           printf( "The postfix expr is %s\n", $2);
+           free($2);
+           printf( "2:Pl enter yet another infix expr ending with ; or <ctrl-d> to quit : ");
+         }
+       | lines SEMICOLON  
+       |   /*epsilon*/    { printf("1:Pl enter an infix expr ending with ; or <ctrl-d> to quit : ");}    
+       ;
+
+expr	 : expr PLUS expr 
+         { 
+           char *res = malloc(strlen($1)+strlen($3) + 5);
+           sprintf (res, "%s %s +", $1, $3);
+           free($1); free($3);
+           $$ = res;
+         }
+       | expr MUL  expr         
+         { 
+           char *res = malloc(strlen($1)+strlen($3) + 5);
+           sprintf (res, "%s %s *", $1, $3);
+           free($1); free($3);
+           $$ = res;
+         }
+       | LRP expr  RRP           { $$ = $2;}
+       | NUMBER                  { char *res = malloc(10); sprintf (res, "%d", $1); $$ = res;}
+	     ;
+
+
+%%
+void yyerror(char *msg)
+{
+  printf("error in input %s\n", msg);
+  exit(1);
+}
+
+int main()
+{
+  
+
+  yyparse();
+}
+
+/*************************************************
+compiling
+*************************************************/
+$ yacc -d a.y
+$ lex a.l
+$ gcc lex.yy.c y.tab.c -ll -o a
+$ ./a
+/*************************************************
+infix2prefix
+*************************************************/
+/*
+  File: a.l
+  Desc: Lexical Analyser
+*/
+
+%{
+#include <stdio.h>
+#include "y.tab.h"
+/*extern int yylval; */
+%}
+
+delim           [ \t\n]
+ws              {delim}+
+letter		[a-zA-Z]
+l_		[letter_]
+digit		[0-9]
+id		{l_}({l_}|{digit})*
+int_num		{digit}+
+
+%%
+{ws}	{}
+"+"	{return PLUS;}
+"-"	{return MINUS;}
+"*"	{return MUL;}
+"/"	{return DIV;}
+"(" {return LRP;}
+")" {return RRP;}
+";" {return SEMICOLON;}
+{int_num} {yylval.iVal = strtol(yytext, NULL, 10); return NUMBER;}
+{id} 	{ return ID;}
+.	{ printf ("yylex:error:%s:\n", yytext);}
+//========================================================================================
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#define MAX_LEN  10
+
+%}
+
+%union {
+  int iVal;
+  char *sVal;
+}
+
+%token <iVal> NUMBER
+%token EOLN PLUS MINUS MUL DIV LRP RRP 
+%token SEMICOLON ID
+
+%type <sVal> expr
+
+/*
+  E -> E + E | E * E | NUM | ID | (E)
+  printf ("T1:got %d * %d\n", $1, $3);
+*/
+%left PLUS 
+%left MUL
+
+
+%%
+
+lines  : lines expr SEMICOLON   
+         { 
+           printf( "The prefix expr is %s\n", $2);
+           free($2);
+           printf( "2:Pl enter yet another infix expr ending with ; or <ctrl-d> to quit : ");
+         }
+       | lines SEMICOLON  
+       |  /*epsilon*/    { printf("1:Pl enter an infix expr ending with ; or <ctrl-d> to quit : ");}     
+       ;
+
+expr	 : expr PLUS expr         
+         { 
+           char *res = malloc(strlen($1)+strlen($3) + 5);
+           sprintf (res, "+ %s %s", $1, $3);
+           free($1); free($3);
+           $$ = res;
+         }
+       | expr MUL  expr   
+         { 
+           char *res = malloc(strlen($1)+strlen($3) + 5);
+           sprintf (res, "* %s %s", $1, $3);
+           free($1); free($3);
+           $$ = res;
+         }
+       | LRP expr  RRP            { $$ = $2;}
+       | NUMBER                 { char *res = malloc(10); sprintf (res, "%d", $1); $$ = res;}
+	     ;
+
+
+%%
+void yyerror(char *msg)
+{
+  printf("error in input %s\n", msg);
+  exit(1);
+}
+
+int main()
+{
+  
+
+  yyparse();
+}
+==================================================
+$ yacc -d a.y
+$ lex a.l
+$ gcc lex.yy.c y.tab.c -ll -o a
+$ ./a
+/*************************************************
+Postfix2infix
+*************************************************/
+/*
+  File: a.l
+  Desc: Lexical Analyser
+*/
+
+%{
+#include <stdio.h>
+#include "y.tab.h"
+/*extern int yylval; */
+%}
+
+delim           [ \t\n]
+ws              {delim}+
+letter		[a-zA-Z]
+l_		[letter_]
+digit		[0-9]
+id		{l_}({l_}|{digit})*
+int_num		{digit}+
+
+%%
+{ws}	{}
+"+"	{return PLUS;}
+"-"	{return MINUS;}
+"*"	{return MUL;}
+"/"	{return DIV;}
+"(" {return LRP;}
+")" {return RRP;}
+";" {return SEMICOLON;}
+{int_num} {yylval.iVal = strtol(yytext, NULL, 10); return NUMBER;}
+{id} 	{ return ID;}
+.	{ printf ("yylex:error:%s:\n", yytext);}
+
+//=============================================================
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#define MAX_LEN  10
+%}
+
+%union {
+  int iVal;
+  char *sVal;
+}
+
+%token <iVal> NUMBER
+%token EOLN PLUS MINUS MUL DIV LRP RRP 
+%token SEMICOLON ID
+
+%type <sVal> expr
+/*
+  E -> E + E | E * E | NUM | ID | (E)
+  printf ("T1:got %d * %d\n", $1, $3);
+
+%left PLUS 
+%left MUL
+*/
+
+%%
+
+lines  : lines expr SEMICOLON   
+         { 
+           printf( "The infix expr is %s\n", $2);
+           free($2);
+           printf( "2:Pl enter yet another postfix expr ending with ; or <ctrl-d> to quit : ");
+         }
+       | lines SEMICOLON  
+       |   /*epsilon*/    { printf("1:Pl enter a postfix expr ending with ; or <ctrl-d> to quit : ");}    
+       ;
+
+expr	 : expr expr PLUS
+         { 
+           char *res = malloc(strlen($1)+strlen($2) + 5);
+           sprintf (res, " (%s + %s) ", $1, $2);
+           free($1); free($2);
+           $$ = res;
+         }
+       | expr expr  MUL       
+         { 
+           char *res = malloc(strlen($1)+strlen($2) + 5);
+           sprintf (res, " (%s * %s) ", $1, $2);
+           free($1); free($2);
+           $$ = res;
+         }
+       | NUMBER                  { char *res = malloc(10); sprintf (res, "%d", $1); $$ = res;}
+	     ;
+
+
+%%
+void yyerror(char *msg)
+{
+  printf("error in input %s\n", msg);
+  exit(1);
+}
+
+int main()
+{
+  
+
+  yyparse();
+}
+//=====================================================================================
+$ yacc -d a.y
+$ lex a.l
+$ gcc lex.yy.c y.tab.c -ll -o a
+$ ./a
+./a
+=======================================================================================
